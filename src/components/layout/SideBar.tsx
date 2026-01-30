@@ -42,7 +42,7 @@ export default function SideBar() {
             )}
           </div>
         </Link>
-        <Link to="/">
+        <Link to="/warnings">
           <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
             {isOpen ? (
               <p>Avisos</p>

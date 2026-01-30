@@ -8,12 +8,12 @@ export default function DashCards() {
   const itemInfo = dados.find((item) => item.id === 2);
 
   return (
-    <div className="w-full p-10 flex flex-col items-center gap-8">
-      <div className="h-80 w-full max-w-7-xl bg-[#D9D9D9] rounded-md shadow-md p-6">
+    <div className="w-full p-6 flex flex-col gap-8 ">
+      <div className="h-80 w-full max-w-7-xl bg-[#D9D9D9] rounded-lg shadow-md p-6">
         <p className="font-bold text-[#0A96A6]">Título: {itemDash?.text}</p>
       </div>
 
-      <div className="h-40 w-full max-w-7-xl bg-[#D9D9D9] rounded-md shadow-md p-6">
+      <div className="h-40 w-full max-w-7-xl bg-[#D9D9D9] rounded-lg shadow-md p-6">
         <p className="font-bold text-[#0A96A6]">
           Informativo: {itemInfo?.text}
         </p>
