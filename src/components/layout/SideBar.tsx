@@ -7,7 +7,7 @@ export default function SideBar() {
 
   return (
     <div
-      className={`flex flex-col h-screen bg-[#31A8A8] transition-all duration-300 ${isOpen ? "w-80" : "w-20"}`}
+      className={`flex flex-col h-screen bg-[#31A8A8] transition-all duration-300 ${isOpen ? "w-70" : "w-20"}`}
     >
       <div>
         <div className="flex justify-end p-4">
