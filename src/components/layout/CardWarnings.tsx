@@ -1,3 +1,5 @@
+import { falar } from "../../Features/notifications/services/ttsCards";
+
 export default function CardWarnings() {
   const dados = [
     { id: 1, text: "Atualização de forms" },
@@ -36,6 +38,26 @@ export default function CardWarnings() {
                         ? itemAv5?.text
                         : itemAv6?.text}
             </p>
+            <button
+              className="rounded-md border-2 mt-4"
+              onClick={() =>
+                falar(
+                  item === 1
+                    ? itemAv1?.text || "Sem texto"
+                    : item === 2
+                      ? itemAv2?.text || "Sem texto"
+                      : item === 3
+                        ? itemAv3?.text || "Sem texto"
+                        : item === 4
+                          ? itemAv4?.text || "Sem texto"
+                          : item === 5
+                            ? itemAv5?.text || "Sem texto"
+                            : itemAv6?.text || "Sem texto",
+                )
+              }
+            >
+              Ouvir
+            </button>
           </div>
         ))}
       </div>

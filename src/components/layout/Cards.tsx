@@ -1,7 +1,9 @@
+import { falar } from "../../Features/notifications/services/ttsCards";
+
 export default function Cards() {
   const dados = [
-    { id: 1, text: "Atualização de forms" },
-    { id: 2, text: "O grêmio estudantil.." },
+    { id: 1, title: "titulo", text: "Atualização de forms" },
+    { id: 2, title: "titulo", text: "O grêmio estudantil.." },
   ];
 
   const itemNot1 = dados.find((item) => item.id === 1);
@@ -15,6 +17,18 @@ export default function Cards() {
             <p className="font-bold text-[#0A96A6]">
               {item === 1 ? itemNot1?.text : itemNot2?.text}
             </p>
+            <button
+              className="rounded-md border-2 mt-4"
+              onClick={() =>
+                falar(
+                  item === 1
+                    ? itemNot1?.text || "Sem texto"
+                    : itemNot2?.text || "Sem texto",
+                )
+              }
+            >
+              Ouvir
+            </button>
           </div>
         ))}
       </div>
