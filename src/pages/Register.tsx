@@ -9,11 +9,17 @@ export default function Register() {
 
   const formik = useFormik({
     initialValues: {
+      name: "",
+      cpf: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: Yup.object({
+      name: Yup.string().required("Obrigatório"),
+      cpf: Yup.string()
+        .matches(/^\d{11}$/, "O CPF deve conter 11 dígitos numéricos")
+        .required("Obrigatório"),
       email: Yup.string().email("E-mail inválido").required("Obrigatório"),
       password: Yup.string()
         .min(6, "Mínimo 6 caracteres")
@@ -34,11 +40,48 @@ export default function Register() {
         onSubmit={formik.handleSubmit}
         className="bg-[#31A8A8] p-8 rounded-xl shadow-lg w-full max-w-md flex flex-col"
       >
-        <h1 className="text-2xl font-bold text-black p-30 mb-6 text-center">
+        <h1 className="text-2xl font-bold text-black p-5 text-center">
           Register
         </h1>
 
-        {/* Campo E-mail */}
+        <div className="flex flex-col gap-1 mb-6">
+          <label htmlFor="name" className="text-sm font-medium text-gray-700">
+            Nome Completo
+          </label>
+          <input
+            type="text"
+            id="name"
+            {...formik.getFieldProps("name")}
+            className={`p-2 bg-gray-100 border rounded-lg outline-none shadow-sm transition-all ${
+              formik.touched.name && formik.errors.name
+                ? "border-red-500"
+                : "border-gray-300 focus:border-gray-500"
+            }`}
+          />
+          {formik.touched.name && formik.errors.name && (
+            <span className="text-red-500 text-xs">{formik.errors.name}</span>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-1 mb-6">
+          <label htmlFor="cpf" className="text-sm font-medium text-gray-700">
+            CPF
+          </label>
+          <input
+            type="text"
+            id="cpf"
+            {...formik.getFieldProps("cpf")}
+            className={`p-2 bg-gray-100 border rounded-lg outline-none shadow-sm transition-all ${
+              formik.touched.cpf && formik.errors.cpf
+                ? "border-red-500"
+                : "border-gray-300 focus:border-gray-500"
+            }`}
+          />
+          {formik.touched.cpf && formik.errors.cpf && (
+            <span className="text-red-500 text-xs">{formik.errors.cpf}</span>
+          )}
+        </div>
+
         <div className="flex flex-col gap-1 mb-6">
           <label htmlFor="email" className="text-sm font-medium text-gray-700">
             E-mail
@@ -58,7 +101,6 @@ export default function Register() {
           )}
         </div>
 
-        {/* Campo Senha */}
         <div className="flex flex-col gap-1 mb-6">
           <label
             htmlFor="password"
