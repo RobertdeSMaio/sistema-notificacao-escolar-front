@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5279",
+  baseURL: "https://sistema-notificacao-escolar-back.onrender.com/index.html",
 });
 
 export default api;
