@@ -34,7 +34,7 @@ export default function Register() {
     onSubmit: (values) => {
       console.log("Dados prontos para o Banco:", values);
 
-      navigate("/Login");
+      navigate("/");
     },
   });
 
