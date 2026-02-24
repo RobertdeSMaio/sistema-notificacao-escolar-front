@@ -1,11 +1,14 @@
 import { useFormik } from "formik";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 export default function Register() {
   // Estados para controlar a visibilidade de cada campo de senha
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +33,8 @@ export default function Register() {
     }),
     onSubmit: (values) => {
       console.log("Dados prontos para o Banco:", values);
-      alert("Registro enviado! Verifique o console.");
+
+      navigate("/Login");
     },
   });
 
@@ -167,7 +171,6 @@ export default function Register() {
             </span>
           )}
         </div>
-
         <button
           type="submit"
           className="bg-gray-500 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors shadow-md"
