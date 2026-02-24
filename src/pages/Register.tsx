@@ -31,10 +31,16 @@ export default function Register() {
         .oneOf([Yup.ref("password")], "As senhas não conferem")
         .required("Obrigatório"),
     }),
-    onSubmit: (values) => {
-      console.log("Dados prontos para o Banco:", values);
+    onSubmit: (values, actions) => {
+      try {
+        console.log("Dados prontos para o Banco:", values);
 
-      navigate("/");
+        navigate("/");
+      } catch (error) {
+        console.log("Erro no registro", error);
+      } finally {
+        actions.setSubmitting(false);
+      }
     },
   });
 
