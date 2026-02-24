@@ -16,7 +16,6 @@ export default function Login() {
       .required("A senha é obrigatória"),
   });
 
-  /* Validação e post do formulário do login*/
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,7 +26,7 @@ export default function Login() {
       console.log("Dados do login:", values);
       try {
         const response = await axios.post(
-          "http://localhost:3000/login",
+          "https://sistema-notificacao-escolar-back.onrender.com",
           values,
         );
 
