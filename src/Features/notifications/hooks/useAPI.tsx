@@ -6,7 +6,6 @@ export function ListaNotificacoes() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Função para buscar dados
     api
       .get("/notificacoes")
       .then((response) => {
@@ -17,7 +16,7 @@ export function ListaNotificacoes() {
         console.error("Erro ao buscar notificações:", err);
         setLoading(false);
       });
-  }, []); // Array vazio significa: executa apenas uma vez ao montar o componente
+  }, []);
 
   if (loading) return <p>Carregando notificações...</p>;
 
