@@ -1,6 +1,11 @@
-import { Menu, X } from "lucide-react"; // Sugestão de biblioteca de ícones
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import iconeAviso from "../../public/Assets/aviso.png";
+import iconeCasa from "../../public/Assets/casa.png";
+import logoEscola from "../../public/Assets/escola.png";
+import iconePainel from "../../public/Assets/painel.png";
+import iconeSaida from "../../public/Assets/saida.png";
 
 export default function SideBar() {
   const [isOpen, setIsOpen] = useState(true);
@@ -22,11 +27,11 @@ export default function SideBar() {
           <div className="text-2xl font-bold text-black mb-6 text-center">
             {isOpen ? (
               <p>
-                <img src="escola.png" alt="Escola" className="w-20 h-20" />
+                <img src={logoEscola} alt="Escola" className="w-20 h-20" />
               </p>
             ) : (
               <p>
-                <img src="escola.png" alt="Escola" className="w-10 h-10" />
+                <img src={logoEscola} alt="Escola" className="w-10 h-10" />
               </p>
             )}
           </div>
@@ -37,7 +42,7 @@ export default function SideBar() {
               <p>Inicial</p>
             ) : (
               <p>
-                <img src="casa.png" alt="H" className="w-4 h-4" />
+                <img src={iconeCasa} alt="H" className="w-4 h-4" />
               </p>
             )}
           </div>
@@ -48,7 +53,7 @@ export default function SideBar() {
               <p>Avisos</p>
             ) : (
               <p>
-                <img src="aviso.png" alt="aviso" className="h-4 w-4" />
+                <img src={iconeAviso} alt="aviso" className="h-4 w-4" />
               </p>
             )}
           </div>
@@ -59,7 +64,7 @@ export default function SideBar() {
               <p>Dashboard</p>
             ) : (
               <p>
-                <img src="painel.png" alt="painel" className="h-4 w-4" />
+                <img src={iconePainel} alt="painel" className="h-4 w-4" />
               </p>
             )}
           </div>
@@ -72,7 +77,7 @@ export default function SideBar() {
             <p>Log out</p>
           ) : (
             <p>
-              <img src="saida.png" alt="saida" className="h-4 w-4" />
+              <img src={iconeSaida} alt="saida" className="h-4 w-4" />
             </p>
           )}
         </div>
