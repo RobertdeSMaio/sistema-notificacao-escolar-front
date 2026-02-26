@@ -35,7 +35,7 @@ export default function Register() {
     onSubmit: async (values, actions) => {
       try {
         const response = await axios.post(
-          "https://sistema-notificacao-escolar-back.onrender.com/api/auth/register",
+          "https://sistema-notificacao-escolar-back.onrender.com/api/user/register",
           values,
         );
 
