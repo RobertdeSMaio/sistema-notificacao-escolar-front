@@ -33,10 +33,16 @@ export default function Register() {
         .required("Obrigatório"),
     }),
     onSubmit: async (values, actions) => {
+      const payload = {
+        Name: values.name,
+        Email: values.email,
+        Password: values.password,
+        Cpf: values.cpf,
+      };
       try {
         const response = await axios.post(
           "https://sistema-notificacao-escolar-back.onrender.com/api/user/register",
-          values,
+          payload,
         );
 
         localStorage.setItem("token", response.data.token);

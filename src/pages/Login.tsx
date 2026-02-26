@@ -24,10 +24,14 @@ export default function Login() {
     validationSchema,
     onSubmit: async (values) => {
       console.log("Dados do login:", values);
+      const payload = {
+        Email: values.email,
+        Password: values.password,
+      };
       try {
         const response = await axios.post(
           "https://sistema-notificacao-escolar-back.onrender.com/api/user/login",
-          values,
+          payload,
         );
 
         localStorage.setItem("token", response.data.token);
