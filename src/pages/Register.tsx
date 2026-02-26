@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 export default function Register() {
@@ -189,12 +189,20 @@ export default function Register() {
             </span>
           )}
         </div>
-        <button
-          type="submit"
-          className="bg-gray-500 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors shadow-md"
-        >
-          Registrar
-        </button>
+        <div className="space-x-59">
+          <button
+            type="submit"
+            className="bg-gray-500 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors shadow-md"
+          >
+            Registrar
+          </button>
+          <Link
+            to="/"
+            className="mt-2 bg-gray-300 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors"
+          >
+            Voltar
+          </Link>
+        </div>
       </form>
 
       <div className="flex h-screen w-full items-center justify-center p-10 text-center text-[#0A96A6]">
