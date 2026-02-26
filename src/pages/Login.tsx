@@ -26,7 +26,7 @@ export default function Login() {
       console.log("Dados do login:", values);
       try {
         const response = await axios.post(
-          "https://sistema-notificacao-escolar-back.onrender.com",
+          "https://sistema-notificacao-escolar-back.onrender.com/login",
           values,
         );
 

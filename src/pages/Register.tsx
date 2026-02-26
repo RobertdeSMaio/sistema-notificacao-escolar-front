@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -31,10 +32,15 @@ export default function Register() {
         .oneOf([Yup.ref("password")], "As senhas não conferem")
         .required("Obrigatório"),
     }),
-    onSubmit: (values, actions) => {
+    onSubmit: async (values, actions) => {
       try {
-        console.log("Dados prontos para o Banco:", values);
+        const response = await axios.post(
+          "https://sistema-notificacao-escolar-back.onrender.com/register",
+          values,
+        );
 
+        localStorage.setItem("token", response.data.token);
+        console.log("Dados prontos para o Banco:", values);
         navigate("/");
       } catch (error) {
         console.log("Erro no registro", error);
