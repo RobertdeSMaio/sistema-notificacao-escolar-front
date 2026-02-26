@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 export default function Login() {
@@ -16,13 +16,15 @@ export default function Login() {
       .required("A senha é obrigatória"),
   });
 
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     validationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, actions) => {
       console.log("Dados do login:", values);
       const payload = {
         Email: values.email,
@@ -35,8 +37,11 @@ export default function Login() {
         );
 
         localStorage.setItem("token", response.data.token);
+        navigate("/home");
       } catch (_error) {
         console.log("Erro no login", _error);
+      } finally {
+        actions.setSubmitting(false);
       }
     },
   });
