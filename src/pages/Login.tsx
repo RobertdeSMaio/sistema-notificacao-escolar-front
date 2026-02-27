@@ -40,6 +40,19 @@ export default function Login() {
         navigate("/home");
       } catch (_error) {
         console.log("Erro no login", _error);
+        if (
+          _error.response &&
+          (_error.response.status === 401 || _error.response.status === 400)
+        ) {
+          actions.setErrors({
+            email: "E-mail ou senha incorretos",
+          });
+        } else {
+          actions.setErrors({
+            email:
+              "Não foi possível conectar ao servidor. Tente novamente mais tarde.",
+          });
+        }
       } finally {
         actions.setSubmitting(false);
       }
@@ -101,10 +114,6 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => {
-                    console.log(
-                      "Botão clicado! Estado anterior:",
-                      showPassword,
-                    );
                     setShowPassword(!showPassword);
                   }}
                   className="absolute right-3 z-10 p-1 text-xs font-bold bg-gray-100 hover:text-gray-800"
@@ -116,7 +125,10 @@ export default function Login() {
 
               {formik.touched.password && formik.errors.password && (
                 <span className="text-red-500 text-xs">
-                  {formik.errors.password}
+                  {formik.errors.password ===
+                  "A senha deve ter pelo mens 6 caracteres"
+                    ? "A senha deve ter pelo menos 6 caracteres"
+                    : formik.errors.password}
                 </span>
               )}
             </div>
