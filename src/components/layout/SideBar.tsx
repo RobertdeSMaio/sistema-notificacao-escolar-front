@@ -1,5 +1,5 @@
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import iconeAviso from "../../public/Assets/aviso.png";
 import iconeCasa from "../../public/Assets/casa.png";
@@ -8,7 +8,13 @@ import iconePainel from "../../public/Assets/painel.png";
 import iconeSaida from "../../public/Assets/saida.png";
 
 export default function SideBar() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState<boolean>(() => {
+    const savedState = localStorage.getItem("sidebar-open");
+    return savedState !== null ? JSON.parse(savedState) : true;
+  });
+  useEffect(() => {
+    localStorage.setItem("sidebar-open", JSON.stringify(isOpen));
+  }, [isOpen]);
 
   return (
     <div
