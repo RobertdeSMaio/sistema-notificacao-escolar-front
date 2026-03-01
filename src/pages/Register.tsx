@@ -5,9 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 export default function Register() {
-  // Estados para controlar a visibilidade de cada campo de senha
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [serverError, setServerError] = useState(null);
 
   const navigate = useNavigate();
 
@@ -18,6 +18,7 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
+      telefone: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Obrigatório"),
@@ -31,21 +32,27 @@ export default function Register() {
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password")], "As senhas não conferem")
         .required("Obrigatório"),
+      telefone: Yup.string()
+        .matches(/^\d{10,11}$/, "Telefone inválido")
+        .required("Obrigatório"),
     }),
     onSubmit: async (values, actions) => {
+      setServerError(null);
       const payload = {
         Name: values.name,
         Email: values.email,
         Password: values.password,
         Cpf: values.cpf,
+        Telefone: values.telefone,
       };
       try {
         const response = await axios.post(
           "https://sistema-notificacao-escolar-back.onrender.com/api/user/register",
           payload,
         );
-
-        localStorage.setItem("token", response.data.token);
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
+        }
         console.log("Dados prontos para o Banco:", values);
         navigate("/");
       } catch (error) {
@@ -65,6 +72,13 @@ export default function Register() {
         <h1 className="text-2xl font-bold text-black p-5 text-center">
           Register
         </h1>
+        {/* ALERTA DE ERRO DO SERVIDOR */}
+        {serverError && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 text-sm animate-pulse">
+            <strong className="font-bold">Ops! </strong>
+            <span className="inline">{serverError}</span>
+          </div>
+        )}
 
         <div className="flex flex-col gap-1 mb-6">
           <label htmlFor="name" className="text-sm font-medium text-gray-700">
@@ -122,6 +136,29 @@ export default function Register() {
             <span className="text-red-500 text-xs">{formik.errors.email}</span>
           )}
         </div>
+        <div className="flex flex-col gap-1 mb-6">
+          <label
+            htmlFor="telefone"
+            className="text-sm font-medium text-gray-700"
+          >
+            Telefone
+          </label>
+          <input
+            type="tel"
+            id="telefone"
+            {...formik.getFieldProps("telefone")}
+            className={`p-2 bg-gray-100 border rounded-lg outline-none shadow-sm transition-all ${
+              formik.touched.telefone && formik.errors.telefone
+                ? "border-red-500"
+                : "border-gray-300 focus:border-gray-500"
+            }`}
+          />
+          {formik.touched.telefone && formik.errors.telefone && (
+            <span className="text-red-500 text-xs">
+              {formik.errors.telefone}
+            </span>
+          )}
+        </div>
 
         <div className="flex flex-col gap-1 mb-6">
           <label
@@ -142,7 +179,7 @@ export default function Register() {
               }`}
             />
             <button
-              type="button" // Essencial para não submeter o form ao clicar
+              type="button"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-gray-600 hover:text-gray-800"
             >
