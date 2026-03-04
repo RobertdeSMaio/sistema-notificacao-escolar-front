@@ -58,7 +58,7 @@ export default function Register() {
       } catch (error) {
         if (
           error.response &&
-          (error.response.status === 401 || error.response.status === 400)
+          (error.response.status === 409 || error.response.status === 400)
         ) {
           actions.setErrors({
             email: "E-mail já está em uso",
