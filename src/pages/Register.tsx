@@ -56,6 +56,20 @@ export default function Register() {
         console.log("Dados prontos para o Banco:", values);
         navigate("/");
       } catch (error) {
+        if (
+          error.response &&
+          (error.response.status === 401 || error.response.status === 400)
+        ) {
+          actions.setErrors({
+            email: "E-mail já está em uso",
+            cpf: "CPF já está em uso",
+          });
+        } else {
+          actions.setErrors({
+            email:
+              "Não foi possível conectar ao servidor. Tente novamente mais tarde.",
+          });
+        }
         console.log("Erro no registro", error);
       } finally {
         actions.setSubmitting(false);
