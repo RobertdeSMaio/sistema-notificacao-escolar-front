@@ -260,7 +260,7 @@ export default function Register() {
       <div className="flex h-screen w-full items-center justify-center p-10 text-center text-[#0A96A6]">
         <h2 className="text-2xl font-bold">
           "É a educação que faz o futuro parecer um lugar de esperança e
-          transformação”. Marianna Moreno"
+          transformação”. - Marianna Moreno
         </h2>
       </div>
     </main>
