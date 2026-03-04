@@ -240,19 +240,20 @@ export default function Register() {
             </span>
           )}
         </div>
-        <div className="space-x-59">
-          <button
-            type="submit"
-            className="bg-gray-500 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors shadow-md"
-          >
-            Registrar
-          </button>
-          <Link
-            to="/"
-            className="mt-2 bg-gray-300 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors"
-          >
-            Voltar
-          </Link>
+        <div className="grid grid-cols-1 gap-2">
+          <div className="space-x-59">
+            <button
+              type="submit"
+              className="bg-gray-300 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors shadow-md"
+            >
+              {formik.isSubmitting ? "Registrando..." : "Registrar"}
+            </button>
+            <Link to="/">
+              <button className="mt-2 bg-gray-300 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors">
+                Voltar
+              </button>
+            </Link>
+          </div>
         </div>
       </form>
 

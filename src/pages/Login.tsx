@@ -144,11 +144,10 @@ export default function Login() {
               >
                 {formik.isSubmitting ? "Entrando..." : "Entrar"}
               </button>
-              <Link
-                to="/register"
-                className="mt-2 bg-gray-300 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors"
-              >
-                Registrar
+              <Link to="/register">
+                <button className="mt-2 bg-gray-300 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors">
+                  Registrar
+                </button>
               </Link>
             </div>
           </form>
