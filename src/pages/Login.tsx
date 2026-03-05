@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import logoEscola from "../public/Assets/escola.png";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -64,7 +65,7 @@ export default function Login() {
       <main className="bg-gray-100 shadow-md flex min-h-screen">
         <div className="bg-[#31A8A8] p-8 rounded-xl shadow-lg w-full max-w-md">
           <h1 className="text-2xl font-bold text-black p-30 mb-6 text-center">
-            Login
+            <img src={logoEscola} alt="Login" />
           </h1>
 
           <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
