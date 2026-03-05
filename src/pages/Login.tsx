@@ -38,11 +38,11 @@ export default function Login() {
 
         localStorage.setItem("token", response.data.token);
         navigate("/home");
-      } catch (_error) {
-        console.log("Erro no login", _error);
+      } catch (error) {
+        console.log("Erro no login", error);
         if (
-          _error.response &&
-          (_error.response.status === 401 || _error.response.status === 400)
+          error.response &&
+          (error.response.status === 401 || error.response.status === 400)
         ) {
           actions.setErrors({
             email: "E-mail ou senha incorretos",
