@@ -62,7 +62,7 @@ export default function Login() {
 
   return (
     <>
-      <main className="bg-gray-100 shadow-md flex min-h-screen">
+      <main className="shadow-md flex min-h-screen">
         <div className="bg-[#31A8A8] p-8 rounded-xl shadow-lg w-full max-w-md">
           <h1 className="text-2xl font-bold text-black p-30 mb-6 text-center">
             <img src={logoEscola} alt="Login" />
@@ -153,7 +153,7 @@ export default function Login() {
             </div>
           </form>
         </div>
-        <div className="flex h-screen w-full items-center justify-center p-10 text-center text-[#0A96A6]">
+        <div className="hidden md:flex h-screen w-full items-center justify-center p-10 text-center text-[#0A96A6]">
           <h2 className="text-2xl font-bold">
             "É a educação que faz o futuro parecer um lugar de esperança e
             transformação”. - Marianna Moreno
