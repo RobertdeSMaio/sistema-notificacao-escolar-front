@@ -13,10 +13,8 @@ export default function SideBar() {
     return savedState !== null ? JSON.parse(savedState) : true;
   });
 
-  // Pega a role do usuário (ajuste a chave 'user-role' para a que você usa no seu app)
   const userRole = localStorage.getItem("user-role");
 
-  // Define quem pode ver as opções administrativas
   const hasAdminAccess = ["Admin", "Teacher", "Principal"].includes(
     userRole || "",
   );
@@ -24,6 +22,11 @@ export default function SideBar() {
   useEffect(() => {
     localStorage.setItem("sidebar-open", JSON.stringify(isOpen));
   }, [isOpen]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+  };
 
   return (
     <div
@@ -105,13 +108,16 @@ export default function SideBar() {
       </div>
 
       <Link to="/">
-        <div className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+        <button
+          onClick={handleLogout}
+          className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors"
+        >
           {isOpen ? (
             <p>Log out</p>
           ) : (
             <img src={iconeSaida} alt="saida" className="h-4 w-4" />
           )}
-        </div>
+        </button>
       </Link>
 
       <a
