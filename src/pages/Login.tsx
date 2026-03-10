@@ -68,7 +68,7 @@ export default function Login() {
             <img src={logoEscola} alt="Login" />
           </h1>
 
-          <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
             {/* Campo E-mail */}
             <div className="flex flex-col gap-1">
               <label
@@ -152,6 +152,13 @@ export default function Login() {
               </Link>
             </div>
           </form>
+          <a
+            href="https://github.com/RobertdeSMaio"
+            target="_blank"
+            className="m-40 text-black-500 hover:underline"
+          >
+            Github
+          </a>
         </div>
         <div className="hidden md:flex h-screen w-full items-center justify-center p-10 text-center text-[#0A96A6]">
           <h2 className="text-2xl font-bold">

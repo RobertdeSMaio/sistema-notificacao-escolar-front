@@ -111,6 +111,13 @@ export default function SideBar() {
           )}
         </div>
       </Link>
+      <a
+        href="https://github.com/RobertdeSMaio"
+        target="_blank"
+        className="mt-60 ml-23 text-gray-500 hover:underline"
+      >
+        Github
+      </a>
     </div>
   );
 }
