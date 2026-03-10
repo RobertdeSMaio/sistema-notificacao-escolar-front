@@ -12,13 +12,22 @@ export default function SideBar() {
     const savedState = localStorage.getItem("sidebar-open");
     return savedState !== null ? JSON.parse(savedState) : true;
   });
+
+  // Pega a role do usuário (ajuste a chave 'user-role' para a que você usa no seu app)
+  const userRole = localStorage.getItem("user-role");
+
+  // Define quem pode ver as opções administrativas
+  const hasAdminAccess = ["Admin", "Teacher", "Principal"].includes(
+    userRole || "",
+  );
+
   useEffect(() => {
     localStorage.setItem("sidebar-open", JSON.stringify(isOpen));
   }, [isOpen]);
 
   return (
     <div
-      className={`flex flex-col  bg-[#31A8A8] transition-all duration-300 ${isOpen ? "w-60" : "w-20"}`}
+      className={`flex flex-col bg-[#31A8A8] transition-all duration-300 ${isOpen ? "w-60" : "w-20"}`}
     >
       <div>
         <div className="flex justify-end p-4">
@@ -29,92 +38,86 @@ export default function SideBar() {
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
+
         <div className="flex flex-col items-center p-4">
           <div className="text-2xl font-bold text-black mb-6 text-center">
-            {isOpen ? (
-              <p>
-                <img src={logoEscola} alt="Escola" className="w-20 h-20" />
-              </p>
-            ) : (
-              <p>
-                <img src={logoEscola} alt="Escola" className="w-10 h-10" />
-              </p>
-            )}
+            <img
+              src={logoEscola}
+              alt="Escola"
+              className={isOpen ? "w-20 h-20" : "w-10 h-10"}
+            />
           </div>
         </div>
+
         <Link to="/Home">
-          <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+          <div className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
             {isOpen ? (
               <p>Inicial</p>
             ) : (
-              <p>
-                <img src={iconeCasa} alt="H" className="w-4 h-4" />
-              </p>
+              <img src={iconeCasa} alt="H" className="w-4 h-4" />
             )}
           </div>
         </Link>
+
         <Link to="/warnings">
-          <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+          <div className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
             {isOpen ? (
               <p>Avisos</p>
             ) : (
-              <p>
-                <img src={iconeAviso} alt="aviso" className="h-4 w-4" />
-              </p>
+              <img src={iconeAviso} alt="aviso" className="h-4 w-4" />
             )}
           </div>
         </Link>
 
         <Link to="/boletim">
-          <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+          <div className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
             {isOpen ? (
               <p>Boletim</p>
             ) : (
-              <p>
-                <img src={iconeAviso} alt="boletim" className="h-4 w-4" />
-              </p>
+              <img src={iconeAviso} alt="boletim" className="h-4 w-4" />
             )}
           </div>
         </Link>
-        <Link to="/AdminPainel">
-          <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
-            {isOpen ? (
-              <p>Admin</p>
-            ) : (
-              <p>
-                <img src={iconeAviso} alt="admin" className="h-4 w-4" />
-              </p>
-            )}
-          </div>
-        </Link>
-        <Link to="/dashpage">
-          <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
-            {isOpen ? (
-              <p>Dashboard</p>
-            ) : (
-              <p>
-                <img src={iconePainel} alt="painel" className="h-4 w-4" />
-              </p>
-            )}
-          </div>
-        </Link>
+
+        {hasAdminAccess && (
+          <>
+            <Link to="/AdminPainel">
+              <div className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+                {isOpen ? (
+                  <p>Admin</p>
+                ) : (
+                  <img src={iconeAviso} alt="admin" className="h-4 w-4" />
+                )}
+              </div>
+            </Link>
+
+            <Link to="/dashpage">
+              <div className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+                {isOpen ? (
+                  <p>Dashboard</p>
+                ) : (
+                  <img src={iconePainel} alt="painel" className="h-4 w-4" />
+                )}
+              </div>
+            </Link>
+          </>
+        )}
       </div>
 
       <Link to="/">
-        <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+        <div className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
           {isOpen ? (
             <p>Log out</p>
           ) : (
-            <p>
-              <img src={iconeSaida} alt="saida" className="h-4 w-4" />
-            </p>
+            <img src={iconeSaida} alt="saida" className="h-4 w-4" />
           )}
         </div>
       </Link>
+
       <a
         href="https://github.com/RobertdeSMaio"
         target="_blank"
-        className="mt-60 ml-23 text-gray-500 hover:underline"
+        className="flex justify-center p-2 mt-30 rounded-md hover:underline hover:bg-[#288a8a] transition-colors"
       >
         Github
       </a>

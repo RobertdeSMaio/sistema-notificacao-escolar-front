@@ -1,4 +1,10 @@
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+} from "react-router-dom";
 import SideBar from "../components/layout/SideBar";
 import AdminPainel from "../pages/AdminPainel";
 import Boletim from "../pages/Boletim";
@@ -19,6 +25,16 @@ const AdminLayout = () => {
   );
 };
 
+const ProtectedRoute = ({ allowedRoles }: { allowedRoles: string[] }) => {
+  const userRole = localStorage.getItem("userRole");
+
+  if (!userRole || !allowedRoles.includes(userRole)) {
+    return <Navigate to="/home" />;
+  }
+
+  return <Outlet />;
+};
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -27,11 +43,20 @@ export default function AppRoutes() {
         <Route path="/register" element={<Register />} />
 
         <Route element={<AdminLayout />}>
-          <Route path="/AdminPainel" element={<AdminPainel />} />
-          <Route path="/boletim" element={<Boletim />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/dashpage" element={<DashboardPage />} />
           <Route path="/warnings" element={<Warnings />} />
+          <Route path="/boletim" element={<Boletim />} />
+
+          <Route
+            element={
+              <ProtectedRoute
+                allowedRoles={["Admin", "Teacher", "Principal"]}
+              />
+            }
+          >
+            <Route path="/dashpage" element={<DashboardPage />} />
+            <Route path="/AdminPainel" element={<AdminPainel />} />
+          </Route>
         </Route>
 
         <Route
