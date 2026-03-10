@@ -26,7 +26,7 @@ export default function NotificationForm() {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md border border-slate-200">
       <h2 className="text-2xl font-bold text-slate-800 mb-6">
-        Enviar Comunicado (Formik)
+        Enviar Comunicado
       </h2>
 
       <Formik
@@ -63,7 +63,7 @@ export default function NotificationForm() {
             {targetType === "specific" && (
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-slate-700">
-                  Selecione os Alunos
+                  Selecione o destinatário(s)
                 </label>
                 <Select
                   isMulti

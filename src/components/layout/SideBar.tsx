@@ -18,7 +18,7 @@ export default function SideBar() {
 
   return (
     <div
-      className={`flex flex-col  bg-[#31A8A8] transition-all duration-300 ${isOpen ? "w-70" : "w-20"}`}
+      className={`flex flex-col  bg-[#31A8A8] transition-all duration-300 ${isOpen ? "w-60" : "w-20"}`}
     >
       <div>
         <div className="flex justify-end p-4">
@@ -64,17 +64,7 @@ export default function SideBar() {
             )}
           </div>
         </Link>
-        <Link to="/dashpage">
-          <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
-            {isOpen ? (
-              <p>Dashboard</p>
-            ) : (
-              <p>
-                <img src={iconePainel} alt="painel" className="h-4 w-4" />
-              </p>
-            )}
-          </div>
-        </Link>
+
         <Link to="/boletim">
           <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
             {isOpen ? (
@@ -93,6 +83,17 @@ export default function SideBar() {
             ) : (
               <p>
                 <img src={iconeAviso} alt="admin" className="h-4 w-4" />
+              </p>
+            )}
+          </div>
+        </Link>
+        <Link to="/dashpage">
+          <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+            {isOpen ? (
+              <p>Dashboard</p>
+            ) : (
+              <p>
+                <img src={iconePainel} alt="painel" className="h-4 w-4" />
               </p>
             )}
           </div>

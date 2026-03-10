@@ -1,7 +1,7 @@
 import { Form, Formik, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
-import NotificationCard from "../Features/notifications/components/NotificationCard";
-import NotificationForm from "../Features/notifications/components/NotificationForms";
+import Classes from "../Features/components/Classes";
+import NotificationForm from "../Features/components/NotificationForms";
 
 interface NotificationValues {
   title: string;
@@ -37,18 +37,27 @@ export default function AdminPainel() {
   });
 
   return (
-    <main className="w-full flex-1">
+    <main className="min-h-full flex-1">
       <div className="grid grid-cols-2 md:grid-cols-2 gap-3 p-6">
+        <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md border border-slate-200">
+          <Form>
+            <FormObserver
+              onChange={(values) => {
+                setPreviewValues({
+                  ...values,
+                  target: values.recipients.length > 0 ? "specific" : "all",
+                });
+              }}
+            />
+            <Classes />
+          </Form>
+        </div>
         <div className="p-10">
-          <h1 className="text-xl font-bold text-slate-700 p-10">
-            Painel de Disparo de Notificação
-          </h1>
-
           <Formik
             initialValues={previewValues}
             onSubmit={(values) => console.log("Enviado:", values)}
           >
-            <Form className="bg-white p-6 rounded-lg shadow-sm">
+            <Form>
               <FormObserver
                 onChange={(values) => {
                   setPreviewValues({
@@ -61,20 +70,6 @@ export default function AdminPainel() {
             </Form>
           </Formik>
         </div>
-
-        <section className="xl:sticky xl:top-0 h-fit">
-          <h2 className="text-lg font-semibold text-slate-600 mb-4 self-start p-2">
-            Prévia
-          </h2>
-          <div className="w-full max-w-2xl">
-            <NotificationCard
-              title={previewValues.title}
-              content={previewValues.content}
-              type={previewValues.target}
-              date={new Date()}
-            />
-          </div>
-        </section>
       </div>
     </main>
   );

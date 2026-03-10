@@ -1,4 +1,4 @@
-import { falar } from "../../Features/notifications/services/ttsCards";
+import { falar } from "../../Features/services/ttsCards";
 
 export default function DashCards() {
   const dados = [
