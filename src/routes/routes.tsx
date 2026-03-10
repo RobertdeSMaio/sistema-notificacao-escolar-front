@@ -27,7 +27,7 @@ export default function AppRoutes() {
         <Route path="/register" element={<Register />} />
 
         <Route element={<AdminLayout />}>
-          <Route path="/adminpainel" element={<AdminPainel />} />
+          <Route path="/AdminPainel" element={<AdminPainel />} />
           <Route path="/boletim" element={<Boletim />} />
           <Route path="/home" element={<Home />} />
           <Route path="/dashpage" element={<DashboardPage />} />
