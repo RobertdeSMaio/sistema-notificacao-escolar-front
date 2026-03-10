@@ -75,6 +75,28 @@ export default function SideBar() {
             )}
           </div>
         </Link>
+        <Link to="/boletim">
+          <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+            {isOpen ? (
+              <p>Boletim</p>
+            ) : (
+              <p>
+                <img src={iconeAviso} alt="boletim" className="h-4 w-4" />
+              </p>
+            )}
+          </div>
+        </Link>
+        <Link to="/AdminPainel">
+          <div className=" flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+            {isOpen ? (
+              <p>Admin</p>
+            ) : (
+              <p>
+                <img src={iconeAviso} alt="admin" className="h-4 w-4" />
+              </p>
+            )}
+          </div>
+        </Link>
       </div>
 
       <Link to="/">
