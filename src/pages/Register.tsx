@@ -10,6 +10,27 @@ export default function Register() {
   const [serverError, setServerError] = useState(null);
 
   const navigate = useNavigate();
+  const validateCPF = (cpf) => {
+    cpf = cpf.replace(/[^\d]+/g, ""); // Remove caracteres especiais
+    if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false; // Bloqueia repetidos como 111.111...
+
+    let soma = 0,
+      resto;
+    for (let i = 1; i <= 9; i++)
+      soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.substring(9, 10))) return false;
+
+    soma = 0;
+    for (let i = 1; i <= 10; i++)
+      soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    resto = (soma * 10) % 11;
+    if (resto === 10 || resto === 11) resto = 0;
+    if (resto !== parseInt(cpf.substring(10, 11))) return false;
+
+    return true;
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -23,8 +44,8 @@ export default function Register() {
     validationSchema: Yup.object({
       name: Yup.string().required("Obrigatório"),
       cpf: Yup.string()
-        .matches(/^\d{11}$/, "O CPF deve conter 11 dígitos numéricos")
-        .required("Obrigatório"),
+        .required("O CPF é obrigatório")
+        .test("is-cpf", "CPF inválido", (value) => validateCPF(value)),
       email: Yup.string().email("E-mail inválido").required("Obrigatório"),
       password: Yup.string()
         .min(6, "Mínimo 6 caracteres")
