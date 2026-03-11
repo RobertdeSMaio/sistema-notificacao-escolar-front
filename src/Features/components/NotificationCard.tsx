@@ -4,7 +4,7 @@ export default function NotificationCard({ notification }) {
     : "Data indisponível";
 
   return (
-    <div className="bg-[#D9D9D9] p-4 rounded-md shadow-md flex flex-col min-h-55 max-h-87.5 relative border-t-4 border-[#088395] transition-transform hover:scale-[1.02]">
+    <div className="bg-[#ffffff] p-4 rounded-md shadow-md flex flex-col min-h-55 max-h-87.5 relative border-t-4 border-[#088395] transition-transform hover:scale-[1.02]">
       <span
         className={`absolute top-2 right-2 text-[10px] font-bold px-2 py-1 rounded-full shadow-sm ${
           notification.target === "all"
