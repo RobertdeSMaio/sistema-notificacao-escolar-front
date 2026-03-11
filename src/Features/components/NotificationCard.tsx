@@ -14,14 +14,14 @@ export default function NotificationCard({
   type,
 }: NotificiationCardProps) {
   return (
-    <div className="max-w-md w-full bg-white border-l-4 border-blue-600 rounded-r-xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4">
+    <div className="max-w-md w-full bg-white border-l-4 border-green-600 rounded-r-xl shadow-sm hover:shadow-md transition-shadow p-5 mb-4">
       <div className="flex justify-between items-start mb-3">
         {/* Badge de Categoria */}
         <span
           className={`flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
             type === "all"
               ? "bg-amber-100 text-amber-700"
-              : "bg-blue-100 text-blue-700"
+              : "bg-green-100 text-green-700"
           }`}
         >
           {type === "all" ? <Users size={12} /> : <User size={12} />}
@@ -37,8 +37,8 @@ export default function NotificationCard({
 
       <div className="flex gap-4">
         {/* Ícone Lateral */}
-        <div className="bg-blue-50 p-2 rounded-full h-fit">
-          <Bell className="text-blue-600" size={20} />
+        <div className="bg-green-50 p-2 rounded-full h-fit">
+          <Bell className="text-green-600" size={20} />
         </div>
 
         {/* Conteúdo da Mensagem */}

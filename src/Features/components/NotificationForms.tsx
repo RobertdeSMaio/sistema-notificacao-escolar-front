@@ -26,7 +26,7 @@ export default function NotificationForm() {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md border border-slate-200">
       <h2 className="text-2xl font-bold text-slate-800 mb-6">
-        Enviar Comunicado (Formik)
+        Enviar Comunicado
       </h2>
 
       <Formik
@@ -46,14 +46,14 @@ export default function NotificationForm() {
               <button
                 type="button"
                 onClick={() => setTargetType("all")}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${targetType === "all" ? "bg-white shadow-sm text-blue-600" : "text-slate-500"}`}
+                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${targetType === "all" ? "bg-white shadow-sm text-green-600" : "text-slate-500"}`}
               >
                 <Users size={18} /> Todos
               </button>
               <button
                 type="button"
                 onClick={() => setTargetType("specific")}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${targetType === "specific" ? "bg-white shadow-sm text-blue-600" : "text-slate-500"}`}
+                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${targetType === "specific" ? "bg-white shadow-sm text-green-600" : "text-slate-500"}`}
               >
                 <User size={18} /> Específicos
               </button>
@@ -63,7 +63,7 @@ export default function NotificationForm() {
             {targetType === "specific" && (
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-slate-700">
-                  Selecione os Alunos
+                  Selecione o destinatário(s)
                 </label>
                 <Select
                   isMulti
@@ -73,7 +73,7 @@ export default function NotificationForm() {
                 />
                 {errors.recipients && touched.recipients && (
                   <div className="text-red-500 text-xs">
-                    {errors.recipients}
+                    {String(errors.recipients)}
                   </div>
                 )}
               </div>
@@ -86,7 +86,7 @@ export default function NotificationForm() {
               </label>
               <Field
                 name="title"
-                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-green-500 outline-none"
               />
               <ErrorMessage
                 name="title"
@@ -104,7 +104,7 @@ export default function NotificationForm() {
                 as="textarea"
                 name="content"
                 rows="4"
-                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-blue-500 outline-none"
+                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-green-500 outline-none"
               />
               <ErrorMessage
                 name="content"
@@ -115,7 +115,7 @@ export default function NotificationForm() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2"
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2"
             >
               <Send size={18} /> Disparar Notificação
             </button>
