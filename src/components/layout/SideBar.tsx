@@ -108,7 +108,7 @@ export default function SideBar() {
       </div>
 
       <Link to="/">
-        <button
+        <a
           onClick={handleLogout}
           className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors"
         >
@@ -117,7 +117,7 @@ export default function SideBar() {
           ) : (
             <img src={iconeSaida} alt="saida" className="h-4 w-4" />
           )}
-        </button>
+        </a>
       </Link>
 
       <a
