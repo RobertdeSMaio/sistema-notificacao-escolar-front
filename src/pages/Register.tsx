@@ -44,8 +44,10 @@ export default function Register() {
     validationSchema: Yup.object({
       name: Yup.string().required("Obrigatório"),
       cpf: Yup.string()
-        .required("O CPF é obrigatório")
+        .matches(/^\d{11}$/, "O CPF deve conter 11 dígitos numéricos")
+        .required("Obrigatório")
         .test("is-cpf", "CPF inválido", (value) => validateCPF(value)),
+
       email: Yup.string().email("E-mail inválido").required("Obrigatório"),
       password: Yup.string()
         .min(6, "Mínimo 6 caracteres")
