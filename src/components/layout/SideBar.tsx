@@ -15,9 +15,9 @@ export default function SideBar() {
 
   const userRole = localStorage.getItem("user-role");
 
-  const hasAdminAccess = ["Admin", "Teacher", "Principal"].includes(
-    userRole || "",
-  );
+  const hasAdminAccess = ["admin", "teacher", "principal"]
+    .map((v) => v.toLowerCase())
+    .includes(userRole || "");
 
   useEffect(() => {
     localStorage.setItem("sidebar-open", JSON.stringify(isOpen));
