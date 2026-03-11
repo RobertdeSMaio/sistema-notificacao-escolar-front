@@ -26,10 +26,14 @@ const AdminLayout = () => {
 };
 
 const ProtectedRoute = ({ allowedRoles }: { allowedRoles: string[] }) => {
-  const userRole = localStorage.getItem("userRole");
+  const userRole = localStorage.getItem("userRole")?.toLowerCase() || "";
 
-  if (!userRole || !allowedRoles.includes(userRole)) {
-    return <Navigate to="/home" />;
+  const hasAcess = allowedRoles
+    .map((roles) => roles.toLowerCase())
+    .includes(userRole);
+
+  if (!hasAcess) {
+    return <Navigate to="/home" replace />;
   }
 
   return <Outlet />;
