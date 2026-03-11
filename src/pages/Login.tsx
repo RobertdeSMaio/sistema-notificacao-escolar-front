@@ -64,12 +64,12 @@ export default function Login() {
   return (
     <>
       <main className="shadow-md flex min-h-screen">
-        <div className="bg-[#31A8A8] p-8 rounded-xl shadow-lg w-full max-w-md">
+        <div className="min-h-screen bg-[#34a0a4] flex flex-col items-center justify-between py-8 max-w-md w-full mx-auto">
           <h1 className="text-2xl font-bold text-black p-30 mb-6 text-center">
             <img src={logoEscola} alt="Login" />
           </h1>
 
-          <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
+          <form onSubmit={formik.handleSubmit} className="flex flex-col gap-3">
             {/* Campo E-mail */}
             <div className="flex flex-col gap-1">
               <label
@@ -96,15 +96,13 @@ export default function Login() {
             </div>
 
             {/* Campo Senha */}
-            <div className="flex flex-col gap-1 mb-6">
+            <div className="text-sm font-medium text-gray-700">
               <label htmlFor="password">Senha</label>
 
-              {/* O container do input e do botão precisa ser relative e NÃO ter flex-col */}
               <div className="relative flex items-center">
                 <input
                   id="password"
                   {...formik.getFieldProps("password")}
-                  // O type vem DEPOIS do getFieldProps para garantir que o estado mande
                   type={showPassword ? "text" : "password"}
                   className={`w-full bg-gray-100 p-2 border rounded-md outline-none pr-12 ${
                     formik.touched.password && formik.errors.password
@@ -156,7 +154,7 @@ export default function Login() {
           <a
             href="https://github.com/RobertdeSMaio"
             target="_blank"
-            className="m-40 text-black-500 hover:underline"
+            className=" text-black-500 whitespace-nowrap hover:underline"
           >
             Github
           </a>

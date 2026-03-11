@@ -7,7 +7,6 @@ import * as Yup from "yup";
 export default function NotificationForm() {
   const [targetType, setTargetType] = useState("all");
 
-  // Esquema de Validação com Yup
   const validationSchema = Yup.object({
     title: Yup.string().required("O título é obrigatório"),
     content: Yup.string().required("O conteúdo da mensagem é obrigatório"),
@@ -32,34 +31,42 @@ export default function NotificationForm() {
       <Formik
         initialValues={{ title: "", content: "", recipients: [] }}
         validationSchema={validationSchema}
-        onSubmit={(values, { resetForm }) => {
-          const payload = { ...values, target: targetType };
-          console.log("Enviando via Formik:", payload);
-          alert("Notificação enviada!");
+        onSubmit={async (values, { resetForm }) => {
+          const payload = {
+            title: values.title,
+            content: values.content,
+            target: targetType,
+            recipientsIds:
+              targetType === "specific"
+                ? values.recipients.map((r) => r.value)
+                : [],
+          };
+
+          console.log("Enviando para API:", payload);
+
+          alert("Notificação disparada!");
           resetForm();
+          setTargetType("all");
         }}
       >
         {({ setFieldValue, errors, touched }) => (
           <Form className="space-y-6">
-            {/* Seletor de Destinatário */}
             <div className="flex gap-4 p-1 bg-slate-100 rounded-lg">
               <button
                 type="button"
                 onClick={() => setTargetType("all")}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${targetType === "all" ? "bg-white shadow-sm text-green-600" : "text-slate-500"}`}
+                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${targetType === "all" ? "bg-white shadow-sm text-[#088395]" : "text-slate-500"}`}
               >
                 <Users size={18} /> Todos
               </button>
               <button
                 type="button"
                 onClick={() => setTargetType("specific")}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${targetType === "specific" ? "bg-white shadow-sm text-green-600" : "text-slate-500"}`}
+                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${targetType === "specific" ? "bg-white shadow-sm text-[#088395]" : "text-slate-500"}`}
               >
                 <User size={18} /> Específicos
               </button>
             </div>
-
-            {/* Campo Condicional de Alunos */}
             {targetType === "specific" && (
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-slate-700">
@@ -70,6 +77,7 @@ export default function NotificationForm() {
                   options={studentsMock}
                   className="text-slate-800"
                   onChange={(val) => setFieldValue("recipients", val)}
+                  placeholder="Selecione os alunos..."
                 />
                 {errors.recipients && touched.recipients && (
                   <div className="text-red-500 text-xs">
@@ -79,14 +87,13 @@ export default function NotificationForm() {
               </div>
             )}
 
-            {/* Título */}
             <div className="space-y-1">
               <label className="block text-sm font-medium text-slate-700">
                 Título
               </label>
               <Field
                 name="title"
-                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-green-500 outline-none"
+                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-[#088395] outline-none"
               />
               <ErrorMessage
                 name="title"
@@ -95,7 +102,6 @@ export default function NotificationForm() {
               />
             </div>
 
-            {/* Conteúdo */}
             <div className="space-y-1">
               <label className="block text-sm font-medium text-slate-700">
                 Mensagem
@@ -104,7 +110,7 @@ export default function NotificationForm() {
                 as="textarea"
                 name="content"
                 rows="4"
-                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-green-500 outline-none"
+                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-[#088395] outline-none"
               />
               <ErrorMessage
                 name="content"
@@ -115,7 +121,7 @@ export default function NotificationForm() {
 
             <button
               type="submit"
-              className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2"
+              className="w-full bg-[#088395] hover:bg-[#066a7a] text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors"
             >
               <Send size={18} /> Disparar Notificação
             </button>

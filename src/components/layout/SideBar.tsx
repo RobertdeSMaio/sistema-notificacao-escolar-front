@@ -32,10 +32,10 @@ export default function SideBar() {
 
   return (
     <div
-      className={`flex flex-col bg-[#31A8A8] transition-all duration-300 ${isOpen ? "w-60" : "w-20"}`}
+      className={`min-h-screen bg-[#34a0a4] flex flex-col justify-between py-2  mx-autotransition-all duration-300 ${isOpen ? "w-60" : "w-20"}`}
     >
       <div>
-        <div className="flex justify-end p-4">
+        <div className="flex justify-end">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="p-2 rounded-md hover:bg-[#288a8a] transition-colors"
