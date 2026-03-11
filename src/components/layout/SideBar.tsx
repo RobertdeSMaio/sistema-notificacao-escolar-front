@@ -13,11 +13,11 @@ export default function SideBar() {
     return savedState !== null ? JSON.parse(savedState) : true;
   });
 
-  const userRole = localStorage.getItem("user-role");
+  const role = localStorage.getItem("role");
 
   const hasAdminAccess = ["admin", "teacher", "principal"]
     .map((v) => v.toLowerCase())
-    .includes(userRole || "");
+    .includes(role || "");
 
   useEffect(() => {
     localStorage.setItem("sidebar-open", JSON.stringify(isOpen));
@@ -25,7 +25,7 @@ export default function SideBar() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("userRole");
+    localStorage.removeItem("role");
   };
 
   return (
@@ -115,7 +115,7 @@ export default function SideBar() {
           {isOpen ? (
             <p>Log out</p>
           ) : (
-            <img src={iconeSaida} alt="saida" className="h-4 w-4" />
+            <img src={iconeSaida} alt="saida" className=" h-4 w-4" />
           )}
         </a>
       </Link>

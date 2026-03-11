@@ -26,11 +26,11 @@ const AdminLayout = () => {
 };
 
 const ProtectedRoute = ({ allowedRoles }: { allowedRoles: string[] }) => {
-  const userRole = localStorage.getItem("userRole")?.toLowerCase() || "";
+  const role = localStorage.getItem("role")?.toLowerCase() || "";
 
   const hasAcess = allowedRoles
     .map((roles) => roles.toLowerCase())
-    .includes(userRole);
+    .includes(role);
 
   if (!hasAcess) {
     return <Navigate to="/home" replace />;
