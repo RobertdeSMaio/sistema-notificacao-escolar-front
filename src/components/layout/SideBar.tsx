@@ -13,7 +13,9 @@ export default function SideBar() {
     return savedState !== null ? JSON.parse(savedState) : true;
   });
 
-  const role = localStorage.getItem("role");
+  const storedRole = localStorage.getItem("role");
+
+  const role = storedRole ? storedRole.toLowerCase() : "";
 
   const hasAdminAccess = ["admin", "teacher", "principal"]
     .map((v) => v.toLowerCase())
