@@ -31,7 +31,7 @@ export default function NotificationForm() {
       <Formik
         initialValues={{ title: "", content: "", recipients: [] }}
         validationSchema={validationSchema}
-        onSubmit={async (values, { resetForm }) => {
+        onSubmit={async (values, { resetForm, setSubmitting }) => {
           const payload = {
             title: values.title,
             content: values.content,
@@ -42,18 +42,38 @@ export default function NotificationForm() {
                 : [],
           };
 
-          console.log("Enviando para API:", payload);
+          try {
+            const response = await fetch(
+              "https://sua-api.com/api/notificacao/enviar", //TODO - Substituir pela URL real do endpoint | criar endpoint no backend
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              },
+            );
 
-          alert("Notificação disparada!");
-          resetForm();
-          setTargetType("all");
+            if (response.ok) {
+              alert("Notificação enviada com sucesso!");
+              resetForm();
+              setTargetType("all");
+            } else {
+              alert("Erro ao enviar a notificação.");
+            }
+          } catch (error) {
+            console.error("Erro na rede:", error);
+            alert("Não foi possível conectar ao servidor.");
+          } finally {
+            setSubmitting(false); // Libera o botão
+          }
         }}
       >
-        {({ setFieldValue, errors, touched }) => (
+        {({ setFieldValue, errors, touched, isSubmitting }) => (
           <Form className="space-y-6">
+            {/* Seletor de Destinatário */}
             <div className="flex gap-4 p-1 bg-slate-100 rounded-lg">
               <button
                 type="button"
+                disabled={isSubmitting}
                 onClick={() => setTargetType("all")}
                 className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${targetType === "all" ? "bg-white shadow-sm text-[#088395]" : "text-slate-500"}`}
               >
@@ -61,12 +81,15 @@ export default function NotificationForm() {
               </button>
               <button
                 type="button"
+                disabled={isSubmitting}
                 onClick={() => setTargetType("specific")}
                 className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${targetType === "specific" ? "bg-white shadow-sm text-[#088395]" : "text-slate-500"}`}
               >
                 <User size={18} /> Específicos
               </button>
             </div>
+
+            {/* Select Condicional */}
             {targetType === "specific" && (
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-slate-700">
@@ -76,6 +99,7 @@ export default function NotificationForm() {
                   isMulti
                   options={studentsMock}
                   className="text-slate-800"
+                  isDisabled={isSubmitting}
                   onChange={(val) => setFieldValue("recipients", val)}
                   placeholder="Selecione os alunos..."
                 />
@@ -87,13 +111,15 @@ export default function NotificationForm() {
               </div>
             )}
 
+            {/* Título */}
             <div className="space-y-1">
               <label className="block text-sm font-medium text-slate-700">
                 Título
               </label>
               <Field
                 name="title"
-                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-[#088395] outline-none"
+                disabled={isSubmitting}
+                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-[#088395] outline-none disabled:bg-slate-50"
               />
               <ErrorMessage
                 name="title"
@@ -102,6 +128,7 @@ export default function NotificationForm() {
               />
             </div>
 
+            {/* Mensagem */}
             <div className="space-y-1">
               <label className="block text-sm font-medium text-slate-700">
                 Mensagem
@@ -110,7 +137,8 @@ export default function NotificationForm() {
                 as="textarea"
                 name="content"
                 rows="4"
-                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-[#088395] outline-none"
+                disabled={isSubmitting}
+                className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-[#088395] outline-none disabled:bg-slate-50"
               />
               <ErrorMessage
                 name="content"
@@ -119,11 +147,20 @@ export default function NotificationForm() {
               />
             </div>
 
+            {/* Botão de Envio com Feedback */}
             <button
               type="submit"
-              className="w-full bg-[#088395] hover:bg-[#066a7a] text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors"
+              disabled={isSubmitting}
+              className={`w-full font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors text-white 
+                ${isSubmitting ? "bg-slate-400 cursor-not-allowed" : "bg-[#088395] hover:bg-[#066a7a]"}`}
             >
-              <Send size={18} /> Disparar Notificação
+              {isSubmitting ? (
+                <>Enviando...</>
+              ) : (
+                <>
+                  <Send size={18} /> Disparar Notificação
+                </>
+              )}
             </button>
           </Form>
         )}
