@@ -111,7 +111,7 @@ export default function SideBar() {
             <Link to="/useredit">
               <div className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
                 {isOpen ? (
-                  <p>Editar Usuário</p>
+                  <p>Usuários</p>
                 ) : (
                   <img src={iconeEdit} alt="editar" className="h-4 w-4" />
                 )}
