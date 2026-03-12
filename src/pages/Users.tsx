@@ -89,7 +89,7 @@ export default function ListarUsuarios() {
           usuariosExibidos.map((user) => (
             <div
               key={user.id}
-              className="bg-white p-1 rounded-lg shadow flex justify-between items-center border-l border-[#34a0a4]"
+              className="bg-white p-4 rounded-lg shadow flex justify-between items-center border-l border-[#34a0a4]"
             >
               <div className="grid grid-cols-5 gap-2 flex-1">
                 <p>

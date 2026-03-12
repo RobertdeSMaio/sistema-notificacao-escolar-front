@@ -9,7 +9,7 @@ import SideBar from "../components/layout/SideBar";
 import AdminPainel from "../pages/AdminPainel";
 import Boletim from "../pages/Boletim";
 import DashboardPage from "../pages/Dashboard";
-import EditUsers from "../pages/EditUser";
+import EditarUsuario from "../pages/EditUser";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
@@ -25,6 +25,12 @@ const AdminLayout = () => {
       </main>
     </div>
   );
+};
+
+export const PrivateRoute = ({ children }) => {
+  const isAuthenticated = !!localStorage.getItem("token"); // Ou sua lógica de login
+
+  return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 const ProtectedRoute = ({ allowedRoles }: { allowedRoles: string[] }) => {
@@ -47,30 +53,37 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Route element={<AdminLayout />}>
+                <Route path="/home" element={<Home />} />
+                <Route path="/warnings" element={<Warnings />} />
+                <Route path="/boletim" element={<Boletim />} />
 
-        <Route element={<AdminLayout />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/warnings" element={<Warnings />} />
-          <Route path="/boletim" element={<Boletim />} />
-
-          <Route
-            element={
-              <ProtectedRoute
-                allowedRoles={["Admin", "Teacher", "Principal"]}
-              />
-            }
-          >
-            <Route path="/dashpage" element={<DashboardPage />} />
-            <Route path="/AdminPainel" element={<AdminPainel />} />
-            <Route
-              element={<ProtectedRoute allowedRoles={["Admin", "Principal"]} />}
-            >
-              <Route path="/Users" element={<Users />} />
-              <Route path="/UserEdit/:id" element={<EditUsers />} />
-            </Route>
-          </Route>
-        </Route>
-
+                <Route
+                  element={
+                    <ProtectedRoute
+                      allowedRoles={["Admin", "Teacher", "Principal"]}
+                    />
+                  }
+                >
+                  <Route path="/dashpage" element={<DashboardPage />} />
+                  <Route path="/AdminPainel" element={<AdminPainel />} />
+                  <Route
+                    element={
+                      <ProtectedRoute allowedRoles={["Admin", "Principal"]} />
+                    }
+                  >
+                    <Route path="/Users" element={<Users />} />
+                    <Route path="/UserEdit/:id" element={<EditarUsuario />} />
+                  </Route>
+                </Route>
+              </Route>
+            </PrivateRoute>
+          }
+        />
         <Route
           path="*"
           element={<h1>Página não encontrada! Verifique a URL.</h1>}
