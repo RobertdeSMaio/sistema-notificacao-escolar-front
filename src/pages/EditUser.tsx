@@ -103,7 +103,7 @@ export default function EditarUsuario() {
             className="w-full border p-2 rounded"
             onChange={formik.handleChange}
             value={formik.values.cpf}
-            placeholder="E-mail"
+            placeholder="CPF"
           />
         </div>
 
