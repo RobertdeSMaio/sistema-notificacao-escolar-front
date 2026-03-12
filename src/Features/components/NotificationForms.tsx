@@ -44,7 +44,7 @@ export default function NotificationForm() {
 
           try {
             const response = await fetch(
-              "https://sua-api.com/api/notificacao/enviar", //TODO - Substituir pela URL real do endpoint | criar endpoint no backend
+              "https://sistema-notificacao-escolar-back.onrender.com/api/Notification",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -63,13 +63,12 @@ export default function NotificationForm() {
             console.error("Erro na rede:", error);
             alert("Não foi possível conectar ao servidor.");
           } finally {
-            setSubmitting(false); // Libera o botão
+            setSubmitting(false);
           }
         }}
       >
         {({ setFieldValue, errors, touched, isSubmitting }) => (
           <Form className="space-y-6">
-            {/* Seletor de Destinatário */}
             <div className="flex gap-4 p-1 bg-slate-100 rounded-lg">
               <button
                 type="button"
@@ -89,7 +88,6 @@ export default function NotificationForm() {
               </button>
             </div>
 
-            {/* Select Condicional */}
             {targetType === "specific" && (
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-slate-700">
@@ -111,7 +109,6 @@ export default function NotificationForm() {
               </div>
             )}
 
-            {/* Título */}
             <div className="space-y-1">
               <label className="block text-sm font-medium text-slate-700">
                 Título
@@ -128,7 +125,6 @@ export default function NotificationForm() {
               />
             </div>
 
-            {/* Mensagem */}
             <div className="space-y-1">
               <label className="block text-sm font-medium text-slate-700">
                 Mensagem
@@ -147,7 +143,6 @@ export default function NotificationForm() {
               />
             </div>
 
-            {/* Botão de Envio com Feedback */}
             <button
               type="submit"
               disabled={isSubmitting}
