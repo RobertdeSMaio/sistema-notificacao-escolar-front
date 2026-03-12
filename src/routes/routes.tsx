@@ -12,6 +12,7 @@ import DashboardPage from "../pages/Dashboard";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import UserEdit from "../pages/UserEdit";
 import Warnings from "../pages/Warnings";
 
 const AdminLayout = () => {
@@ -60,6 +61,11 @@ export default function AppRoutes() {
           >
             <Route path="/dashpage" element={<DashboardPage />} />
             <Route path="/AdminPainel" element={<AdminPainel />} />
+            <Route
+              element={<ProtectedRoute allowedRoles={["Admin", "Principal"]} />}
+            >
+              <Route path="/useredit" element={<UserEdit />} />
+            </Route>
           </Route>
         </Route>
 
