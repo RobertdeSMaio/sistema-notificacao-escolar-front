@@ -11,7 +11,7 @@ export default function EditarUsuario() {
     async function carregarUsuario() {
       try {
         const response = await fetch(
-          `https://sistema-notificacao-escolar-back.onrender.com/api/user/${id}`,
+          `https://sistema-notificacao-escolar-back.onrender.com/api/user/{id}`,
         );
         const dados = await response.json();
         setUserData(dados);
