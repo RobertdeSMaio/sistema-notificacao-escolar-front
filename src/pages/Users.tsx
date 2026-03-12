@@ -115,7 +115,7 @@ export default function ListarUsuarios() {
                 </p>
                 <p>
                   <strong>Atualizado em:</strong>
-                  {formatarData(user.UpdatedAt)}
+                  {formatarData(user.updatedAt)}
                 </p>
               </div>
               <div className="flex gap-2 ml-4">
