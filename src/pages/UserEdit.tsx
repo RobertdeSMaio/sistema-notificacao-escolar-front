@@ -20,7 +20,7 @@ export default function ListarUsuarios() {
     async function carregarUsuarios() {
       try {
         const response = await fetch(
-          "https://sistema-notificacao-escolar-back.onrender.com/api/User",
+          "https://sistema-notificacao-escolar-back.onrender.com/api/User/UserList",
         );
         const dados = await response.json();
         setUsuarios(Array.isArray(dados) ? dados : []);
