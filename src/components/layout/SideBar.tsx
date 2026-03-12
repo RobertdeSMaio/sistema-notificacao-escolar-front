@@ -108,7 +108,7 @@ export default function SideBar() {
                 )}
               </div>
             </Link>
-            <Link to="/useredit">
+            <Link to="/Users">
               <div className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
                 {isOpen ? (
                   <p>Usuários</p>
