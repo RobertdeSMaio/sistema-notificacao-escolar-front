@@ -2,8 +2,11 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import iconeAviso from "../../public/Assets/aviso.png";
+import iconeBoletim from "../../public/Assets/boletim-de-noticias.png";
 import iconeCasa from "../../public/Assets/casa.png";
+import iconeEdit from "../../public/Assets/editar.png";
 import logoEscola from "../../public/Assets/escola.png";
+import iconeNot from "../../public/Assets/packard-bell.png";
 import iconePainel from "../../public/Assets/painel.png";
 import iconeSaida from "../../public/Assets/saida.png";
 
@@ -79,7 +82,7 @@ export default function SideBar() {
             {isOpen ? (
               <p>Boletim</p>
             ) : (
-              <img src={iconeAviso} alt="boletim" className="h-4 w-4" />
+              <img src={iconeBoletim} alt="boletim" className="h-4 w-4" />
             )}
           </div>
         </Link>
@@ -91,7 +94,7 @@ export default function SideBar() {
                 {isOpen ? (
                   <p>Admin</p>
                 ) : (
-                  <img src={iconeAviso} alt="admin" className="h-4 w-4" />
+                  <img src={iconeNot} alt="notification" className="h-4 w-4" />
                 )}
               </div>
             </Link>
@@ -102,6 +105,15 @@ export default function SideBar() {
                   <p>Dashboard</p>
                 ) : (
                   <img src={iconePainel} alt="painel" className="h-4 w-4" />
+                )}
+              </div>
+            </Link>
+            <Link to="/useredit">
+              <div className="flex justify-center p-2 rounded-md hover:bg-[#288a8a] transition-colors">
+                {isOpen ? (
+                  <p>Editar Usuário</p>
+                ) : (
+                  <img src={iconeEdit} alt="editar" className="h-4 w-4" />
                 )}
               </div>
             </Link>
