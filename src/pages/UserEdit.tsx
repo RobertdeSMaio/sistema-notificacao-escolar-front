@@ -56,6 +56,20 @@ export default function ListarUsuarios() {
     }
   };
 
+  const formatarData = (dataIso) => {
+    if (!dataIso) return "";
+
+    const data = new Date(dataIso);
+
+    return data.toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   if (loading)
     return (
       <div className="p-10 text-center text-gray-600">Carregando lista...</div>
@@ -93,7 +107,7 @@ export default function ListarUsuarios() {
                 </p>
                 <p>
                   <strong>Criado em:</strong>
-                  {user.createdAt}
+                  {formatarData(user.createdAt)}
                 </p>
               </div>
               <div className="flex gap-2 ml-4">
