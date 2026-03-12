@@ -14,13 +14,14 @@ export default function EditarUsuario() {
       role: "",
     },
     onSubmit: async (values) => {
+      const payload = { ...values, id: id };
       try {
         const response = await fetch(
           `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(values),
+            body: JSON.stringify(payload),
           },
         );
 
@@ -43,7 +44,6 @@ export default function EditarUsuario() {
       )
         .then((res) => res.json())
         .then((data) => {
-          // preenche os valores do formulário com o que veio do banco
           formik.setValues({
             name: data.name || "",
             email: data.email || "",
