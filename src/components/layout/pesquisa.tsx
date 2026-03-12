@@ -5,8 +5,12 @@ export default function Pesquisa({ valor, setValor, onPesquisar, onLimpar }) {
   return (
     <div className="bg-white p-4 rounded-lg mb-6 shadow">
       <div className="flex gap-4 mb-4">
-        <select className="border p-2 rounded-md bg-gray-50">Nome</select>
-        <select className="border p-2 rounded-md bg-gray-50">Contém</select>
+        <select className="border p-2 rounded-md bg-gray-50">
+          <option>Nome</option>
+        </select>
+        <select className="border p-2 rounded-md bg-gray-50">
+          <option>Contém</option>
+        </select>
 
         <input
           type="text"
