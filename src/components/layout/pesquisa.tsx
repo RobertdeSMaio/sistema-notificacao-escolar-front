@@ -1,6 +1,3 @@
-//TODO fazer nav bar para pesquisa com .map e .filter para filtrar os dados
-// Será conectado no caminho userEdit
-
 export default function Pesquisa({ valor, setValor, onPesquisar, onLimpar }) {
   return (
     <div className="bg-white p-4 rounded-lg mb-6 shadow">

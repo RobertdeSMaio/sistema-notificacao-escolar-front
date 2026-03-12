@@ -79,7 +79,7 @@ export default function ListarUsuarios() {
             >
               <div className="grid grid-cols-3 gap-2 flex-1">
                 <p>
-                  <strong>Nome:</strong> {user.nome}
+                  <strong>Nome:</strong> {user.name}
                 </p>
                 <p>
                   <strong>E-mail:</strong> {user.email}
