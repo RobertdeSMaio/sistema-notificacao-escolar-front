@@ -13,7 +13,7 @@ export default function ListarUsuarios() {
 
   const usuariosExibidos = usuarios.filter((user) => {
     if (!filtroAtivo) return true;
-    return user.nome.toLowerCase().includes(filtroAtivo.toLowerCase());
+    return user.name.toLowerCase().includes(filtroAtivo.toLowerCase());
   });
 
   useEffect(() => {
