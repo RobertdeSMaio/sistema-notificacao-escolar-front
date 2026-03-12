@@ -8,6 +8,7 @@ export default function EditarUsuario() {
     name: "",
     email: "",
     telefone: "",
+    role: "",
   });
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function EditarUsuario() {
   };
 
   return (
-    <div className="p-8 max-w-lg mx-auto bg-white shadow rounded-lg">
+    <div className="p-8 min-h-screen mx-auto justify-between bg-white shadow rounded-lg">
       <h2 className="text-xl font-bold mb-4">Editar Usuário</h2>
       <form onSubmit={handleSalvar} className="space-y-4">
         <input
@@ -62,6 +63,12 @@ export default function EditarUsuario() {
             setFormData({ ...formData, telefone: e.target.value })
           }
           placeholder="Telefone"
+        />
+        <input
+          className="w-full border p-2 rounded"
+          value={formData.role}
+          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+          placeholder="Admin, Parent, Student, Teacher, Principal"
         />
         <button
           type="submit"
