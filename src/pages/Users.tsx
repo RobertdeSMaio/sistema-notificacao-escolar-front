@@ -112,7 +112,7 @@ export default function ListarUsuarios() {
               </div>
               <div className="flex gap-2 ml-4">
                 <button
-                  onClick={() => navigate(`/EditUser/${user.id}`)}
+                  onClick={() => navigate(`/UserEdit/${user.id}`)}
                   className="bg-[#34a0a4] hover:bg-[#288a8a] text-white px-3 py-1 rounded text-sm transition"
                 >
                   Editar
