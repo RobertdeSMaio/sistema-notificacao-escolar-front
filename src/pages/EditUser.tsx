@@ -12,7 +12,7 @@ export default function EditarUsuario() {
 
   useEffect(() => {
     fetch(
-      `https://sistema-notificacao-escolar-back.onrender.com/api/User/UpdateU/${id}`,
+      `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
     )
       .then((res) => res.json())
       .then((data) => setFormData(data));
@@ -22,7 +22,7 @@ export default function EditarUsuario() {
     e.preventDefault();
     try {
       const response = await fetch(
-        `https://sistema-notificacao-escolar-back.onrender.com/api/User/UpdateU/${id}`,
+        `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

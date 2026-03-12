@@ -12,7 +12,7 @@ export default function Register() {
   const navigate = useNavigate();
   const validateCPF = (cpf) => {
     cpf = cpf.replace(/[^\d]+/g, ""); // Remove caracteres especiais
-    if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false; // Bloqueia repetidos como 111.111...
+    if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false;
 
     let soma = 0,
       resto;
