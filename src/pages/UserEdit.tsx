@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Pesquisa from "../components/layout/pesquisa";
 
 export default function ListarUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function carregarUsuarios() {
       try {
         const response = await fetch(
-          "https://sistema-notificacao-escolar-back.onrender.com/api/user/{id}",
+          "https://sistema-notificacao-escolar-back.onrender.com/api/user",
         );
         const dados = await response.json();
-
-        setUsuarios(dados);
+        setUsuarios(Array.isArray(dados) ? dados : []); // Garante que é um array
       } catch (error) {
         console.error("Erro ao carregar lista de usuários", error);
       } finally {
@@ -23,8 +24,30 @@ export default function ListarUsuarios() {
     carregarUsuarios();
   }, []);
 
+  const handleExcluir = async (id) => {
+    if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
+      try {
+        const response = await fetch(
+          `https://sistema-notificacao-escolar-back.onrender.com/api/user/${id}`,
+          { method: "DELETE" },
+        );
+
+        if (response.ok) {
+          setUsuarios(usuarios.filter((user) => user.id !== id));
+          alert("Usuário excluído com sucesso!");
+        } else {
+          alert("Erro ao excluir no servidor.");
+        }
+      } catch (error) {
+        console.error("Erro ao excluir usuário", error);
+      }
+    }
+  };
+
   if (loading)
-    return <div className="p-10 text-center">Carregando lista...</div>;
+    return (
+      <div className="p-10 text-center text-gray-600">Carregando lista...</div>
+    );
 
   return (
     <div className="min-h-screen mx-auto p-4 bg-gray-100 shadow-md rounded-lg">
@@ -33,23 +56,39 @@ export default function ListarUsuarios() {
       <div className="space-y-4">
         {usuarios.length > 0 ? (
           usuarios.map((user) => (
-            <ol
+            <div
               key={user.id}
-              className="bg-white p-4 rounded-lg shadow grid grid-cols-3 gap-2 border-l-4 border-blue-500"
+              className="bg-white p-4 rounded-lg shadow flex justify-between items-center border-l-4 border-blue-500"
             >
-              <li>
-                <strong>Nome:</strong> {user.nome}
-              </li>
-              <li>
-                <strong>E-mail:</strong> {user.email}
-              </li>
-              <li>
-                <strong>Telefone:</strong> {user.telefone}
-              </li>
-            </ol>
+              <div className="grid grid-cols-3 gap-2 flex-1">
+                <p>
+                  <strong>Nome:</strong> {user.nome}
+                </p>
+                <p>
+                  <strong>E-mail:</strong> {user.email}
+                </p>
+                <p>
+                  <strong>Telefone:</strong> {user.telefone}
+                </p>
+              </div>
+              <div className="flex gap-2 ml-4">
+                <button
+                  onClick={() => navigate(`/editar/${user.id}`)}
+                  className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition"
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => handleExcluir(user.id)}
+                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition"
+                >
+                  Excluir
+                </button>
+              </div>
+            </div>
           ))
         ) : (
-          <p className="text-center text-gray-500">
+          <p className="text-center text-gray-500 m-10">
             Nenhum usuário encontrado.
           </p>
         )}
