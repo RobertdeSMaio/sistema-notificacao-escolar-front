@@ -135,7 +135,7 @@ export default function Login() {
             <div className="space-x-59">
               <button
                 type="submit"
-                disabled={formik.isSubmitting} // Desabilita o botão durante o envio
+                disabled={formik.isSubmitting}
                 className={`mt-2 bg-gray-300 text-white p-2 rounded-md font-bold hover:bg-gray-600 transition-colors ${
                   formik.isSubmitting
                     ? "bg-gray-400 cursor-not-allowed"

@@ -1,81 +1,139 @@
-import { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditarUsuario() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    telefone: "",
-    role: "",
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      telefone: "",
+      role: "",
+    },
+    onSubmit: async (values) => {
+      try {
+        const response = await fetch(
+          `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(values),
+          },
+        );
+
+        if (response.ok) {
+          alert("Usuário atualizado!");
+          navigate("/Users");
+        } else {
+          alert("Erro ao atualizar usuário.");
+        }
+      } catch (error) {
+        console.error("Erro ao atualizar", error);
+      }
+    },
   });
 
   useEffect(() => {
-    fetch(
-      `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
-    )
-      .then((res) => res.json())
-      .then((data) => setFormData(data));
+    if (id) {
+      fetch(
+        `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          // preenche os valores do formulário com o que veio do banco
+          formik.setValues({
+            name: data.name || "",
+            email: data.email || "",
+            telefone: data.telefone || "",
+            role: data.role || "",
+          });
+        })
+        .catch((err) => console.error("Erro ao buscar usuário", err));
+    }
   }, [id]);
 
-  const handleSalvar = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        },
-      );
-
-      if (response.ok) {
-        alert("Usuário atualizado!");
-        navigate("/Users");
-      }
-    } catch (error) {
-      console.error("Erro ao atualizar", error);
-    }
-  };
-
   return (
-    <div className="p-8 min-h-screen mx-auto justify-between bg-white shadow rounded-lg">
+    <div className="p-8 min-h-screen mx-auto bg-white shadow rounded-lg">
       <h2 className="text-xl font-bold mb-4">Editar Usuário</h2>
-      <form onSubmit={handleSalvar} className="space-y-4">
-        <input
-          className="w-full border p-2 rounded"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          placeholder="Nome"
-        />
-        <input
-          className="w-full border p-2 rounded"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          placeholder="E-mail"
-        />
-        <input
-          className="w-full border p-2 rounded"
-          value={formData.telefone}
-          onChange={(e) =>
-            setFormData({ ...formData, telefone: e.target.value })
-          }
-          placeholder="Telefone"
-        />
-        <input
-          className="w-full border p-2 rounded"
-          value={formData.role}
-          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-          placeholder="Admin, Parent, Student, Teacher, Principal"
-        />
-        <button
-          type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded"
-        >
-          Salvar Alterações
-        </button>
+
+      <form onSubmit={formik.handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Nome
+          </label>
+          <input
+            name="name"
+            className="w-full border p-2 rounded"
+            onChange={formik.handleChange}
+            value={formik.values.name}
+            placeholder="Nome"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            E-mail
+          </label>
+          <input
+            name="email"
+            type="email"
+            className="w-full border p-2 rounded"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+            placeholder="E-mail"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Telefone
+          </label>
+          <input
+            name="telefone"
+            className="w-full border p-2 rounded"
+            onChange={formik.handleChange}
+            value={formik.values.telefone}
+            placeholder="Telefone"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Função
+          </label>
+          <input
+            name="role"
+            className="w-full border p-2 rounded"
+            onChange={formik.handleChange}
+            value={formik.values.role}
+            placeholder="Admin, Parent, Student, Teacher, Principal"
+          />
+        </div>
+
+        <div className="flex gap-4">
+          <button
+            type="submit"
+            disabled={formik.isSubmitting}
+            className={`px-4 py-2 rounded text-white transition ${
+              formik.isSubmitting
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-700"
+            }`}
+          >
+            {formik.isSubmitting ? "Salvando..." : "Salvar Alterações"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate("/Users")}
+            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+          >
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
   );
