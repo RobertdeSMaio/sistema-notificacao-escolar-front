@@ -9,10 +9,11 @@ import SideBar from "../components/layout/SideBar";
 import AdminPainel from "../pages/AdminPainel";
 import Boletim from "../pages/Boletim";
 import DashboardPage from "../pages/Dashboard";
+import EditarUsuario from "../pages/EditUser";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import UserEdit from "../pages/UserEdit";
+import UserEdit from "../pages/Users";
 import Warnings from "../pages/Warnings";
 
 const AdminLayout = () => {
@@ -65,6 +66,7 @@ export default function AppRoutes() {
               element={<ProtectedRoute allowedRoles={["Admin", "Principal"]} />}
             >
               <Route path="/useredit" element={<UserEdit />} />
+              <Route path="/editar/:id" element={<EditarUsuario />} />
             </Route>
           </Route>
         </Route>

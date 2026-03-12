@@ -43,7 +43,7 @@ export default function ListarUsuarios() {
     if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
       try {
         const response = await fetch(
-          `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
+          `https://sistema-notificacao-escolar-back.onrender.com/api/User/DeleteU/${id}`,
           { method: "DELETE" },
         );
         if (response.ok) {
@@ -112,7 +112,7 @@ export default function ListarUsuarios() {
               </div>
               <div className="flex gap-2 ml-4">
                 <button
-                  onClick={() => navigate(`/editar/${user.id}`)}
+                  onClick={() => navigate(`/EditarUsuario/${user.id}`)}
                   className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm transition"
                 >
                   Editar
