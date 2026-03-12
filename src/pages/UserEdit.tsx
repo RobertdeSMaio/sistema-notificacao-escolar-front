@@ -20,7 +20,7 @@ export default function ListarUsuarios() {
     async function carregarUsuarios() {
       try {
         const response = await fetch(
-          "https://sistema-notificacao-escolar-back.onrender.com/api/user",
+          "https://sistema-notificacao-escolar-back.onrender.com/api/User",
         );
         const dados = await response.json();
         setUsuarios(Array.isArray(dados) ? dados : []);
@@ -43,7 +43,7 @@ export default function ListarUsuarios() {
     if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
       try {
         const response = await fetch(
-          `https://sistema-notificacao-escolar-back.onrender.com/api/user/${id}`,
+          `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
           { method: "DELETE" },
         );
         if (response.ok) {
