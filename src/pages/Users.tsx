@@ -99,6 +99,10 @@ export default function ListarUsuarios() {
                   <strong>E-mail:</strong> {user.email}
                 </p>
                 <p>
+                  <strong>CPF: </strong>
+                </p>{" "}
+                {user.cpf}
+                <p>
                   <strong>Telefone:</strong> {user.telefone}
                 </p>
                 <p>
@@ -109,6 +113,10 @@ export default function ListarUsuarios() {
                   <strong>Criado em:</strong>
                   {formatarData(user.createdAt)}
                 </p>
+                <p>
+                  <strong>Atualizado em:</strong>
+                </p>{" "}
+                {formatarData(user.UpdatedAt)}
               </div>
               <div className="flex gap-2 ml-4">
                 <button

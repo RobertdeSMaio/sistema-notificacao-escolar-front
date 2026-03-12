@@ -1,20 +1,23 @@
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditarUsuario() {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const [usuarioCompletoOriginal, setUsuarioCompletoOriginal] = useState(null);
+
   const formik = useFormik({
     initialValues: {
       name: "",
       email: "",
       telefone: "",
+      cpf: "",
       role: "",
     },
     onSubmit: async (values) => {
-      const payload = { ...values, id: id };
+      const payload = { ...usuarioCompletoOriginal, ...values, id: id };
       try {
         const response = await fetch(
           `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
@@ -29,7 +32,9 @@ export default function EditarUsuario() {
           alert("Usuário atualizado!");
           navigate("/Users");
         } else {
-          alert("Erro ao atualizar usuário.");
+          const errorDetail = await response.json();
+          console.error("Detalhes do erro 400:", errorDetail);
+          alert("Erro ao atualizar usuário. Verifique os dados.");
         }
       } catch (error) {
         console.error("Erro ao atualizar", error);
@@ -44,9 +49,12 @@ export default function EditarUsuario() {
       )
         .then((res) => res.json())
         .then((data) => {
+          setUsuarioCompletoOriginal(data);
+
           formik.setValues({
             name: data.name || "",
             email: data.email || "",
+            cpf: data.cpf || "",
             telefone: data.telefone || "",
             role: data.role || "",
           });
@@ -83,6 +91,18 @@ export default function EditarUsuario() {
             className="w-full border p-2 rounded"
             onChange={formik.handleChange}
             value={formik.values.email}
+            placeholder="E-mail"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">CPF</label>
+          <input
+            name="cpf"
+            type="cpf"
+            className="w-full border p-2 rounded"
+            onChange={formik.handleChange}
+            value={formik.values.cpf}
             placeholder="E-mail"
           />
         </div>
