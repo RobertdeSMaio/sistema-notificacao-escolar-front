@@ -52,22 +52,22 @@ export default function AppRoutes() {
           <Route path="/warnings" element={<Warnings />} />
           <Route path="/boletim" element={<Boletim />} />
 
-          <Route
+          {/* <Route
             element={
               <ProtectedRoute
                 allowedRoles={["Admin", "Teacher", "Principal"]}
               />
             }
-          >
-            <Route path="/dashpage" element={<DashboardPage />} />
-            <Route path="/AdminPainel" element={<AdminPainel />} />
-            <Route
-              element={<ProtectedRoute allowedRoles={["Admin", "Principal"]} />}
-            >
-              <Route path="/useredit" element={<UserEdit />} />
-            </Route>
-          </Route>
+          > */}
+          <Route path="/dashpage" element={<DashboardPage />} />
+          <Route path="/AdminPainel" element={<AdminPainel />} />
+          {/* <Route
+            element={<ProtectedRoute allowedRoles={["Admin", "Principal"]} />}
+          > */}
+          <Route path="/useredit" element={<UserEdit />} />
         </Route>
+        {/*</Route> */}
+        {/*</Route> */}
 
         <Route
           path="*"
