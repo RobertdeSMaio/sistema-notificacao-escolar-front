@@ -77,7 +77,7 @@ export default function ListarUsuarios() {
               key={user.id}
               className="bg-white p-4 rounded-lg shadow flex justify-between items-center border-l-4 border-blue-500"
             >
-              <div className="grid grid-cols-3 gap-2 flex-1">
+              <div className="grid grid-cols-5 gap-2 flex-1">
                 <p>
                   <strong>Nome:</strong> {user.name}
                 </p>
@@ -86,6 +86,14 @@ export default function ListarUsuarios() {
                 </p>
                 <p>
                   <strong>Telefone:</strong> {user.telefone}
+                </p>
+                <p>
+                  <strong>Função:</strong>
+                  {user.role}
+                </p>
+                <p>
+                  <strong>Criado em:</strong>
+                  {user.createdAt}
                 </p>
               </div>
               <div className="flex gap-2 ml-4">
