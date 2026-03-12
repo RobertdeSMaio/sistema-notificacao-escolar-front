@@ -5,7 +5,16 @@ import Pesquisa from "../components/layout/pesquisa";
 export default function ListarUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [termoBusca, setTermoBusca] = useState("");
+  const [filtroAtivo, setFiltroAtivo] = useState("");
+
   const navigate = useNavigate();
+
+  const usuariosExibidos = usuarios.filter((user) => {
+    if (!filtroAtivo) return true;
+    return user.nome.toLowerCase().includes(filtroAtivo.toLowerCase());
+  });
 
   useEffect(() => {
     async function carregarUsuarios() {
@@ -14,7 +23,7 @@ export default function ListarUsuarios() {
           "https://sistema-notificacao-escolar-back.onrender.com/api/user",
         );
         const dados = await response.json();
-        setUsuarios(Array.isArray(dados) ? dados : []); // Garante que é um array
+        setUsuarios(Array.isArray(dados) ? dados : []);
       } catch (error) {
         console.error("Erro ao carregar lista de usuários", error);
       } finally {
@@ -24,6 +33,12 @@ export default function ListarUsuarios() {
     carregarUsuarios();
   }, []);
 
+  const aoPesquisar = () => setFiltroAtivo(termoBusca);
+  const aoLimpar = () => {
+    setTermoBusca("");
+    setFiltroAtivo("");
+  };
+
   const handleExcluir = async (id) => {
     if (window.confirm("Tem certeza que deseja excluir este usuário?")) {
       try {
@@ -31,12 +46,9 @@ export default function ListarUsuarios() {
           `https://sistema-notificacao-escolar-back.onrender.com/api/user/${id}`,
           { method: "DELETE" },
         );
-
         if (response.ok) {
           setUsuarios(usuarios.filter((user) => user.id !== id));
           alert("Usuário excluído com sucesso!");
-        } else {
-          alert("Erro ao excluir no servidor.");
         }
       } catch (error) {
         console.error("Erro ao excluir usuário", error);
@@ -51,11 +63,16 @@ export default function ListarUsuarios() {
 
   return (
     <div className="min-h-screen mx-auto p-4 bg-gray-100 shadow-md rounded-lg">
-      <Pesquisa />
+      <Pesquisa
+        valor={termoBusca}
+        setValor={setTermoBusca}
+        onPesquisar={aoPesquisar}
+        onLimpar={aoLimpar}
+      />
 
       <div className="space-y-4">
-        {usuarios.length > 0 ? (
-          usuarios.map((user) => (
+        {usuariosExibidos.length > 0 ? (
+          usuariosExibidos.map((user) => (
             <div
               key={user.id}
               className="bg-white p-4 rounded-lg shadow flex justify-between items-center border-l-4 border-blue-500"
