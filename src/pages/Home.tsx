@@ -7,7 +7,7 @@ export default function Home() {
 
   useEffect(() => {
     fetch(
-      "https://sistema-notificacao-escolar-back.onrender.com/api/Notification",
+      "https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get",
       {
         method: "GET",
       },
@@ -20,7 +20,10 @@ export default function Home() {
       .catch((err) => console.error("Erro ao buscar avisos", err));
   }, []);
 
-  if (loading) return <p className="p-6">Carregando avisos . . . </p>;
+  if (loading)
+    return (
+      <div className="p-10 text-center text-gray-600">Carregando lista...</div>
+    );
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {avisos.length > 0 ? (

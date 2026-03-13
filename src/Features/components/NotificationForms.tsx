@@ -44,7 +44,7 @@ export default function NotificationForm() {
 
           try {
             const response = await fetch(
-              "https://sistema-notificacao-escolar-back.onrender.com/api/Notification",
+              "https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Post",
               {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
