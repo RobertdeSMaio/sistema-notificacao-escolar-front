@@ -1,6 +1,14 @@
-import { ErrorMessage, Field } from "formik";
+import { ErrorMessage, Field, FormikProps } from "formik";
 import { User, Users } from "lucide-react";
 import Select from "react-select";
+import { NotificationValues, SelectOption } from "../students/Iform";
+
+interface NotificationFormProps extends FormikProps<NotificationValues> {
+  students: SelectOption[];
+  isLoadingStudents: boolean;
+  targetType: "all" | "specific";
+  setTargetType: (type: "all" | "specific") => void;
+}
 
 export default function NotificationForm({
   values,
@@ -12,17 +20,16 @@ export default function NotificationForm({
   isLoadingStudents,
   targetType,
   setTargetType,
-}) {
+}: NotificationFormProps) {
   return (
     <div className="space-y-6">
-      {/* Seleção de Público */}
       <div className="flex gap-4 p-1 bg-slate-100 rounded-lg">
         <button
           type="button"
           disabled={isSubmitting}
           onClick={() => {
             setTargetType("all");
-            setFieldValue("recipients", []); // Limpa destinatários ao mudar para Todos
+            setFieldValue("recipients", []);
           }}
           className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md transition ${
             targetType === "all"
@@ -46,7 +53,6 @@ export default function NotificationForm({
         </button>
       </div>
 
-      {/* Select de Alunos (A busca agora funciona!) */}
       {targetType === "specific" && (
         <div className="space-y-2">
           <label
@@ -77,7 +83,6 @@ export default function NotificationForm({
         </div>
       )}
 
-      {/* Título */}
       <div className="space-y-1">
         <label
           htmlFor="title"
@@ -99,7 +104,6 @@ export default function NotificationForm({
         />
       </div>
 
-      {/* Mensagem */}
       <div className="space-y-1">
         <label
           htmlFor="content"
@@ -111,7 +115,7 @@ export default function NotificationForm({
           id="content"
           as="textarea"
           name="content"
-          rows="4"
+          rows={4}
           disabled={isSubmitting}
           placeholder="Digite o comunicado aqui..."
           className="w-full p-2 border border-slate-300 rounded-md focus:ring-2 focus:ring-[#088395] outline-none disabled:bg-slate-50"

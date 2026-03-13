@@ -47,7 +47,7 @@ export default function AdminPainel() {
       setIsLoadingStudents(true);
       try {
         const response = await fetch(
-          "https://sistema-notificacao-escolar-back.onrender.com/api/User",
+          "https://sistema-notificacao-escolar-back.onrender.com/api/User/UserList",
         );
         if (response.ok) {
           const data: UserFromApi[] = await response.json();
@@ -121,7 +121,6 @@ export default function AdminPainel() {
   return (
     <main className="min-h-full p-6 bg-slate-50">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Coluna de Visualização */}
         <div className="space-y-4">
           <h3 className="text-lg font-bold text-slate-700 ml-2">
             Visualização em Tempo Real

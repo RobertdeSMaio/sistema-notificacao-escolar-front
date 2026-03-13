@@ -10,6 +10,7 @@ export default function Home() {
       "https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get",
       {
         method: "GET",
+        headers: { "Content-Type": "application/json" },
       },
     )
       .then((res) => res.json())
