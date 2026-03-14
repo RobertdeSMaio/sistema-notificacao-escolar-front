@@ -1,7 +1,9 @@
 import { Form, Formik, useFormikContext } from "formik";
 import { Send } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import Select from "react-select";
 import * as Yup from "yup";
+import BoletimForm from "../Features/components/BoletimForm";
 import NotificationCard from "../Features/components/NotificationCard";
 import NotificationForm from "../Features/components/NotificationForms";
 import {
@@ -30,6 +32,7 @@ export default function AdminPainel() {
   const [targetType, setTargetType] = useState<"all" | "specific">("all");
   const [students, setStudents] = useState<SelectOption[]>([]);
   const [isLoadingStudents, setIsLoadingStudents] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   const [previewValues, setPreviewValues] = useState<NotificationValues>({
     title: "",
@@ -170,6 +173,30 @@ export default function AdminPainel() {
             )}
           </Formik>
         </div>
+      </div>
+      <div className="max-w-7xl mx-auto space-y-6">
+        <h2 className="text-2xl font-bold text-slate-800">Boletim Escolar</h2>
+
+        <div className="max-w-md">
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Selecione o Aluno
+          </label>
+          <Select
+            options={students}
+            onChange={setSelectedStudent}
+            isLoading={isLoadingStudents}
+            placeholder="Digite o nome para buscar..."
+            noOptionsMessage={() => "Nenhum aluno encontrado"}
+          />
+        </div>
+
+        {selectedStudent ? (
+          <BoletimForm studentId={selectedStudent.value} />
+        ) : (
+          <p className="text-slate-500 text-sm">
+            Selecione um aluno para visualizar ou editar o boletim.
+          </p>
+        )}
       </div>
     </main>
   );

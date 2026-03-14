@@ -1,10 +1,64 @@
-export default function Boletim() {
-  //TODO criar função onde o pai/aluno pode acessar somente o boletim do aluno, e mostrar os dados do boletim em um card
-  //TODO o card deve mostrar as notas, faltas e comentários do professor
-  //TODO professor deve ter a opção de adicionar comentários e notas para cada aluno, e o pai deve receber uma notificação quando isso acontecer
+import { useEffect, useState } from "react";
+import Select from "react-select";
+import BoletimCard from "../Features/components/BoletimCard";
+
+const VIEW_ROLES = ["Student", "Parent"];
+const EDIT_ROLES = ["Admin", "Teacher", "Principal"];
+
+export default function BoletimPage() {
+  const role = localStorage.getItem("role");
+  const userId = localStorage.getItem("userId");
+
+  const [students, setStudents] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+
+  useEffect(() => {
+    if (!EDIT_ROLES.includes(role)) return;
+
+    fetch(
+      "https://sistema-notificacao-escolar-back.onrender.com/api/User/UserList",
+    )
+      .then((r) => r.json())
+      .then((data) =>
+        setStudents(
+          data
+            .filter((u) => u.role === "Student")
+            .map((u) => ({ value: u.id, label: `${u.name} - ${u.cpf}` })),
+        ),
+      );
+  }, []);
+
   return (
-    <div className="flex min-h-screen bg-slate-100">
-      <main></main>
+    <div className="p-6 max-w-6xl mx-auto space-y-8">
+      <h2 className="text-2xl font-bold text-slate-800">Boletim Escolar</h2>
+
+      {/* Student e Parent veem só o próprio */}
+      {VIEW_ROLES.includes(role) && <BoletimCard studentId={userId} />}
+
+      {/* Admin, Teacher e Principal selecionam o aluno */}
+      {EDIT_ROLES.includes(role) && (
+        <>
+          <div className="max-w-md">
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Selecione o Aluno
+            </label>
+            <Select
+              options={students}
+              onChange={setSelectedStudent}
+              placeholder="Digite o nome para buscar..."
+              noOptionsMessage={() => "Nenhum aluno encontrado"}
+            />
+          </div>
+
+          {selectedStudent ? (
+            <BoletimCard studentId={selectedStudent.value} />
+          ) : (
+            <p className="text-slate-500 text-sm">
+              Selecione um aluno para visualizar o boletim.
+            </p>
+          )}
+        </>
+      )}
     </div>
   );
 }
