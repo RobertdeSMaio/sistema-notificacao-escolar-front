@@ -7,6 +7,13 @@ export default function NotificationCard({ notification }) {
     ? new Date(notification.createdAt).toLocaleDateString("pt-BR")
     : "Data indisponível";
 
+  const handleOuvir = () => {
+    const texto = `${notification.title}. ${notification.content}`;
+    const utterance = new SpeechSynthesisUtterance(texto);
+    utterance.lang = "pt-BR";
+    speechSynthesis.speak(utterance);
+  };
+
   useEffect(() => {
     if (notification.target === "all" || !notification.recipientsIds) return;
 
@@ -44,7 +51,10 @@ export default function NotificationCard({ notification }) {
         >
           {notification.title || "Sem Título"}
         </h3>
-        <button className="w-fit border border-black px-3 py-0.5 text-xs font-semibold rounded hover:bg-white transition-colors active:bg-gray-100">
+        <button
+          onClick={handleOuvir}
+          className="w-fit border border-black px-3 py-0.5 text-xs font-semibold rounded hover:bg-white transition-colors active:bg-gray-100"
+        >
           Ouvir
         </button>
       </div>
