@@ -4,7 +4,7 @@ import NotificationCard from "../Features/components/NotificationCard";
 
 export default function NotificationDetail() {
   const { id } = useParams();
-  const [avisos, setAviso] = useState(null);
+  const [avisos, setAvisos] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -22,7 +22,8 @@ export default function NotificationDetail() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setAviso(data);
+        const semGerais = data.filter((n) => n.target !== "all"); // ← remove os GERAL
+        setAvisos(semGerais);
         setLoading(false);
       })
       .catch((err) => console.error("Erro ao buscar aviso", err));
