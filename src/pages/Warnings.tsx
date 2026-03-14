@@ -12,7 +12,7 @@ export default function NotificationDetail() {
     const role = localStorage.getItem("role");
 
     const url =
-      role === "Admin"
+      role === "Admin" || role === "Principal" || role === "Teacher"
         ? "https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get"
         : `https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get?userId=${userId}`;
 
