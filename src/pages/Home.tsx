@@ -11,7 +11,7 @@ export default function Home() {
     )
       .then((res) => res.json())
       .then((data) => {
-        const apenasGerais = data.filter((n) => n.target === "all"); // ← só gerais
+        const apenasGerais = data.filter((n) => n.target === "all");
         setAvisos(apenasGerais);
         setLoading(false);
       })

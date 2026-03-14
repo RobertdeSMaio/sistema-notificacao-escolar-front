@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import NotificationCard from "../Features/components/NotificationCard";
 
 export default function NotificationDetail() {
   const { id } = useParams();
@@ -18,18 +19,18 @@ export default function NotificationDetail() {
       .catch((err) => console.error("Erro ao buscar aviso", err));
   }, [id]);
 
-  if (loading) return <div className="p-10 text-center">Carregando...</div>;
-  if (!aviso)
-    return <div className="p-10 text-center">Notificação não encontrada.</div>;
+  if (loading)
+    return (
+      <div className="p-10 text-center text-gray-600">Carregando lista...</div>
+    );
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-[#088395]">{aviso.title}</h1>
-      <p className="text-gray-700 mt-4">{aviso.content}</p>
-      <div className="mt-6 text-sm text-gray-500">
-        <span>{aviso.author}</span> ·{" "}
-        <span>{new Date(aviso.createdAt).toLocaleDateString("pt-BR")}</span>
-      </div>
+    <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {aviso ? (
+        <NotificationCard key={aviso.id} notification={aviso} />
+      ) : (
+        <p>Nenhum comunicado encontrado.</p>
+      )}
     </div>
   );
 }
