@@ -1,7 +1,29 @@
+import { useEffect, useState } from "react";
+
 export default function NotificationCard({ notification }) {
+  const [recipientNames, setRecipientNames] = useState<string[]>([]);
+
   const dataFormatada = notification.createdAt
     ? new Date(notification.createdAt).toLocaleDateString("pt-BR")
     : "Data indisponível";
+
+  useEffect(() => {
+    if (notification.target === "all" || !notification.recipientsIds) return;
+
+    const ids = notification.recipientsIds.split(",").filter(Boolean);
+
+    Promise.all(
+      ids.map(
+        (id) =>
+          fetch(
+            `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
+          )
+            .then((res) => res.json())
+            .then((user) => user.name)
+            .catch(() => id), // se falhar, mostra o id mesmo
+      ),
+    ).then((names) => setRecipientNames(names));
+  }, [notification.recipientsIds]);
 
   return (
     <div className="bg-[#ffffff] p-4 rounded-md shadow-md flex flex-col min-h-55 max-h-87.5 relative border-t-4 border-[#088395] transition-transform hover:scale-[1.02]">
@@ -39,9 +61,9 @@ export default function NotificationCard({ notification }) {
         </span>
         <span>{dataFormatada}</span>
       </div>
-      {notification.target !== "all" && notification.recipientsIds && (
-        <div className="mt-2 text-[10px] text-green-500">
-          Para: {notification.recipientsIds.split(",").join(", ")}
+      {notification.target !== "all" && recipientNames.length > 0 && (
+        <div className="mt-2 text-[10px] text-blue-500">
+          Para: {recipientNames.join(", ")}
         </div>
       )}
     </div>
