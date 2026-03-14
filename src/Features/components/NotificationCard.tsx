@@ -39,6 +39,11 @@ export default function NotificationCard({ notification }) {
         </span>
         <span>{dataFormatada}</span>
       </div>
+      {notification.target !== "all" && notification.recipientsIds && (
+        <div className="mt-2 text-[10px] text-green-500">
+          Para: {notification.recipientsIds.split(",").join(", ")}
+        </div>
+      )}
     </div>
   );
 }
