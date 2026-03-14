@@ -22,7 +22,7 @@ export default function NotificationDetail() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const semGerais = data.filter((n) => n.target !== "all"); // ← remove os GERAL
+        const semGerais = data.filter((n) => n.target !== "all");
         setAvisos(semGerais);
         setLoading(false);
       })
