@@ -39,6 +39,7 @@ export default function Login() {
 
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("role", response.data.role);
+        localStorage.setItem("userId", response.data.id);
         navigate("/home");
       } catch (error) {
         console.log("Erro no login", error);

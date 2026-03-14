@@ -6,13 +6,18 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(
-      "https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get",
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      },
-    )
+    const userId = localStorage.getItem("userId");
+    const role = localStorage.getItem("role");
+
+    const url =
+      role === "Admin"
+        ? "https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get"
+        : `https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get?userId=${userId}`;
+
+    fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => res.json())
       .then((data) => {
         setAvisos(data);
@@ -20,7 +25,6 @@ export default function Home() {
       })
       .catch((err) => console.error("Erro ao buscar avisos", err));
   }, []);
-
   if (loading)
     return (
       <div className="p-10 text-center text-gray-600">Carregando lista...</div>
