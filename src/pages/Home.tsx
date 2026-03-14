@@ -6,21 +6,13 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    const role = localStorage.getItem("role");
-
-    const url =
-      role === "Admin"
-        ? "https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get"
-        : `https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get?userId=${userId}`;
-
-    fetch(url, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    })
+    fetch(
+      "https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get",
+    )
       .then((res) => res.json())
       .then((data) => {
-        setAvisos(data);
+        const apenasGerais = data.filter((n) => n.target === "all"); // ← só gerais
+        setAvisos(apenasGerais);
         setLoading(false);
       })
       .catch((err) => console.error("Erro ao buscar avisos", err));
