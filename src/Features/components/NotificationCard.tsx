@@ -20,14 +20,13 @@ export default function NotificationCard({ notification }) {
     const ids = notification.recipientsIds.split(",").filter(Boolean);
 
     Promise.all(
-      ids.map(
-        (id) =>
-          fetch(
-            `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
-          )
-            .then((res) => res.json())
-            .then((user) => user.name)
-            .catch(() => id), // se falhar, mostra o id mesmo
+      ids.map((id) =>
+        fetch(
+          `https://sistema-notificacao-escolar-back.onrender.com/api/User/${id}`,
+        )
+          .then((res) => res.json())
+          .then((user) => user.name)
+          .catch(() => id),
       ),
     ).then((names) => setRecipientNames(names));
   }, [notification.recipientsIds]);
@@ -38,7 +37,7 @@ export default function NotificationCard({ notification }) {
         className={`absolute top-2 right-2 text-[10px] font-bold px-2 py-1 rounded-full shadow-sm ${
           notification.target === "all"
             ? "bg-green-100 text-green-700 border border-green-200"
-            : "bg-blue-100 text-blue-700 border border-blue-200"
+            : "bg-green-100 text-green-700 border border-green-200"
         }`}
       >
         {notification.target === "all" ? "GERAL" : "DIRETO"}
@@ -72,7 +71,7 @@ export default function NotificationCard({ notification }) {
         <span>{dataFormatada}</span>
       </div>
       {notification.target !== "all" && recipientNames.length > 0 && (
-        <div className="mt-2 text-[10px] text-blue-500">
+        <div className="mt-2 text-[10px] text-green-500">
           Para: {recipientNames.join(", ")}
         </div>
       )}
