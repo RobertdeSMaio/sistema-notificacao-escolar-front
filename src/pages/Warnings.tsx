@@ -8,9 +8,18 @@ export default function NotificationDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(
-      `https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get/${id}`,
-    )
+    const userId = localStorage.getItem("userId");
+    const role = localStorage.getItem("role");
+
+    const url =
+      role === "Admin"
+        ? "https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get"
+        : `https://sistema-notificacao-escolar-back.onrender.com/api/Notification/Get?userId=${userId}`;
+
+    fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => res.json())
       .then((data) => {
         setAviso(data);
