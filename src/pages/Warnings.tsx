@@ -4,7 +4,7 @@ import NotificationCard from "../Features/components/NotificationCard";
 
 export default function NotificationDetail() {
   const { id } = useParams();
-  const [aviso, setAviso] = useState(null);
+  const [avisos, setAviso] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,8 +35,10 @@ export default function NotificationDetail() {
 
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {aviso ? (
-        <NotificationCard key={aviso.id} notification={aviso} />
+      {avisos.length > 0 ? (
+        avisos.map((item) => (
+          <NotificationCard key={item.id} notification={item} />
+        ))
       ) : (
         <p>Nenhum comunicado encontrado.</p>
       )}
