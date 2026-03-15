@@ -32,10 +32,8 @@ export default function BoletimPage() {
     <div className="p-6 max-w-6xl mx-auto space-y-8">
       <h2 className="text-2xl font-bold text-slate-800">Boletim Escolar</h2>
 
-      {/* Student e Parent veem só o próprio */}
       {VIEW_ROLES.includes(role) && <BoletimCard studentId={userId} />}
 
-      {/* Admin, Teacher e Principal selecionam o aluno */}
       {EDIT_ROLES.includes(role) && (
         <>
           <div className="max-w-md">

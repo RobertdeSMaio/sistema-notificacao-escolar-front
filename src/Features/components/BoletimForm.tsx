@@ -82,6 +82,7 @@ export default function BoletimForm({ studentId }) {
       falta4: row.falta4 !== "" ? Number(row.falta4) : null,
       notaFinal: row.notaFinal !== "" ? Number(row.notaFinal) : null,
       faltaFinal: row.faltaFinal !== "" ? Number(row.faltaFinal) : null,
+      ano: new Date().getFullYear(),
     }));
 
     await fetch(

@@ -25,6 +25,8 @@ const MATERIAS = [
   "Educação Religiosa",
 ];
 
+const ANOS = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
+
 function getColor(value: number) {
   if (value >= 7) return "#10b981";
   if (value >= 5) return "#f59e0b";
@@ -60,41 +62,34 @@ function KpiCard({
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [materiaFiltro, setMateriaFiltro] = useState("");
+  const [anoFiltro, setAnoFiltro] = useState<number | "">(
+    new Date().getFullYear(),
+  );
 
   useEffect(() => {
-    const url = materiaFiltro
-      ? `${API}/api/Estatisticas?materia=${encodeURIComponent(materiaFiltro)}`
-      : `${API}/api/Estatisticas`;
+    const params = new URLSearchParams();
+    if (materiaFiltro) params.append("materia", materiaFiltro);
+    if (anoFiltro) params.append("ano", String(anoFiltro));
+
+    const url = `${API}/api/Estatisticas?${params.toString()}`;
 
     const controller = new AbortController();
-
     fetch(url, { signal: controller.signal })
       .then((r) => r.json())
-      .then((d) => {
-        setData(d);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+      .then((d) => setData(d))
+      .catch((e) => console.error(e));
 
     return () => controller.abort();
-  }, [materiaFiltro]);
+  }, [materiaFiltro, anoFiltro]);
 
-  if (loading)
+  if (!data)
     return (
       <div className="flex items-center justify-center min-h-screen bg-slate-50">
         <div className="text-center space-y-3">
           <div className="w-10 h-10 border-4 border-[#088395] border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-slate-500 text-sm">Carregando estatísticas...</p>
         </div>
-      </div>
-    );
-
-  if (!data)
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-slate-50">
-        <p className="text-slate-500">Nenhum dado encontrado.</p>
       </div>
     );
 
@@ -111,18 +106,33 @@ export default function Dashboard() {
           </p>
         </div>
 
-        <select
-          value={materiaFiltro}
-          onChange={(e) => setMateriaFiltro(e.target.value)}
-          className="border border-slate-200 rounded-lg px-4 py-2 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#088395]"
-        >
-          <option value="">Todas as matérias</option>
-          {MATERIAS.map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
-        </select>
+        <div className="flex gap-3">
+          <select
+            value={materiaFiltro}
+            onChange={(e) => setMateriaFiltro(e.target.value)}
+            className="border border-slate-200 rounded-lg px-4 py-2 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#088395]"
+          >
+            <option value="">Todas as matérias</option>
+            {MATERIAS.map((m) => (
+              <option key={m} value={m}>
+                {m}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={anoFiltro}
+            onChange={(e) => setAnoFiltro(Number(e.target.value))}
+            className="border border-slate-200 rounded-lg px-4 py-2 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#088395]"
+          >
+            <option value="">Todos os anos</option>
+            {ANOS.map((a) => (
+              <option key={a} value={a}>
+                {a}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* KPIs */}
@@ -263,9 +273,9 @@ export default function Dashboard() {
           <thead>
             <tr className="bg-[#088395] text-white">
               <th className="p-3 text-left rounded-tl-lg">Matéria</th>
-              <th className="p-3 text-center">Média</th>
-              <th className="p-3 text-center">Total Faltas</th>
-              <th className="p-3 text-center rounded-tr-lg">Situação</th>
+              <th className="text-center p-3">Média</th>
+              <th className="text-center p-3">Total Faltas</th>
+              <th className="text-center p-3 rounded-tr-lg">Situação</th>
             </tr>
           </thead>
           <tbody>
