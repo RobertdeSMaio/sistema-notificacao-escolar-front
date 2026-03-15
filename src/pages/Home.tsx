@@ -19,7 +19,12 @@ export default function Home() {
   }, []);
   if (loading)
     return (
-      <div className="p-10 text-center text-gray-600">Carregando lista...</div>
+      <div className="flex items-center justify-center min-h-screen bg-slate-50">
+        <div className="text-center space-y-3">
+          <div className="w-10 h-10 border-4 border-[#088395] border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-slate-500 text-sm">Carregando...</p>
+        </div>
+      </div>
     );
   return (
     <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
