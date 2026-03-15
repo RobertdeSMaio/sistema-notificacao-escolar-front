@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Pesquisa from "../components/layout/pesquisa";
 
+const USUARIOS_POR_PAGINA = 50;
+
 export default function ListarUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [termoBusca, setTermoBusca] = useState("");
   const [filtroAtivo, setFiltroAtivo] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const navigate = useNavigate();
 
@@ -15,6 +17,12 @@ export default function ListarUsuarios() {
     if (!filtroAtivo) return true;
     return user.name.toLowerCase().includes(filtroAtivo.toLowerCase());
   });
+
+  const totalPages = Math.ceil(usuariosExibidos.length / USUARIOS_POR_PAGINA);
+  const usuariosPaginados = usuariosExibidos.slice(
+    (currentPage - 1) * USUARIOS_POR_PAGINA,
+    currentPage * USUARIOS_POR_PAGINA,
+  );
 
   useEffect(() => {
     async function carregarUsuarios() {
@@ -33,10 +41,15 @@ export default function ListarUsuarios() {
     carregarUsuarios();
   }, []);
 
-  const aoPesquisar = () => setFiltroAtivo(termoBusca);
+  const aoPesquisar = () => {
+    setFiltroAtivo(termoBusca);
+    setCurrentPage(1);
+  };
+
   const aoLimpar = () => {
     setTermoBusca("");
     setFiltroAtivo("");
+    setCurrentPage(1);
   };
 
   const handleExcluir = async (id) => {
@@ -58,9 +71,7 @@ export default function ListarUsuarios() {
 
   const formatarData = (dataIso) => {
     if (!dataIso) return "";
-
     const data = new Date(dataIso);
-
     return data.toLocaleString("pt-BR", {
       day: "2-digit",
       month: "2-digit",
@@ -90,8 +101,8 @@ export default function ListarUsuarios() {
       />
 
       <div className="space-y-4">
-        {usuariosExibidos.length > 0 ? (
-          usuariosExibidos.map((user) => (
+        {usuariosPaginados.length > 0 ? (
+          usuariosPaginados.map((user) => (
             <div
               key={user.id}
               className="bg-white p-4 rounded-lg shadow flex justify-between items-center border-l border-[#34a0a4]"
@@ -145,6 +156,47 @@ export default function ListarUsuarios() {
           </p>
         )}
       </div>
+
+      {/* Paginação */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-8">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+            className="px-3 py-1 rounded-lg border border-gray-300 text-sm font-medium text-gray-600 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          >
+            ← Anterior
+          </button>
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`w-8 h-8 rounded-lg text-sm font-medium transition ${
+                currentPage === page
+                  ? "bg-[#088395] text-white"
+                  : "border border-gray-300 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 rounded-lg border border-gray-300 text-sm font-medium text-gray-600 hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed transition"
+          >
+            Próximo →
+          </button>
+        </div>
+      )}
+
+      {/* Contador */}
+      <p className="text-center text-sm text-gray-400 mt-3">
+        Página {currentPage} de {totalPages} · {usuariosExibidos.length}{" "}
+        usuários encontrados
+      </p>
     </div>
   );
 }
