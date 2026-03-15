@@ -24,7 +24,7 @@ Sistema completo para gerenciamento escolar com notificações, boletins e dashb
 ## 🚀 Tecnologias
 
 ### Back-end
-- **ASP.NET Core** (.NET 8)
+- **ASP.NET Core** (.NET 10)
 - **Entity Framework Core** + **Npgsql**
 - **PostgreSQL** via [Neon](https://neon.tech)
 - **JWT** para autenticação
