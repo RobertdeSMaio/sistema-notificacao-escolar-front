@@ -9,11 +9,11 @@ export default function EditarUsuario() {
   const [usuarioCompletoOriginal, setUsuarioCompletoOriginal] = useState(null);
 
   const roleOptions = [
-    { label: "Administrador", value: "admin" },
-    { label: "Pai/Mãe", value: "parent" },
-    { label: "Estudante", value: "student" },
-    { label: "Professor", value: "teacher" },
-    { label: "Diretor", value: "principal" },
+    { label: "Administrador", value: "Admin" },
+    { label: "Pai/Mãe", value: "Parent" },
+    { label: "Estudante", value: "Student" },
+    { label: "Professor", value: "Teacher" },
+    { label: "Diretor", value: "Principal" },
   ];
 
   const formik = useFormik({
