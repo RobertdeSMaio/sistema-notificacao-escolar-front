@@ -138,7 +138,10 @@ export default function EditarUsuario() {
             onChange={formik.handleChange}
             className="w-full border p-2 rounded"
           >
-            <option value={formik.values.role}></option>
+            <option value="" disabled>
+              Selecione uma função
+            </option>
+
             {roleOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
