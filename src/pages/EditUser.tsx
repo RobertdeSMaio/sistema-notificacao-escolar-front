@@ -17,12 +17,13 @@ export default function EditarUsuario() {
   ];
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      name: "",
-      email: "",
-      telefone: "",
-      cpf: "",
-      role: "",
+      name: usuarioCompletoOriginal?.name || "",
+      email: usuarioCompletoOriginal?.email || "",
+      telefone: usuarioCompletoOriginal?.telefone || "",
+      cpf: usuarioCompletoOriginal?.cpf || "",
+      role: usuarioCompletoOriginal?.role || "",
     },
     onSubmit: async (values) => {
       const payload = { ...usuarioCompletoOriginal, ...values, id: id };
@@ -58,14 +59,6 @@ export default function EditarUsuario() {
         .then((res) => res.json())
         .then((data) => {
           setUsuarioCompletoOriginal(data);
-
-          formik.setValues({
-            name: data.name || "",
-            email: data.email || "",
-            cpf: data.cpf || "",
-            telefone: data.telefone || "",
-            role: data.role || "",
-          });
         })
         .catch((err) => console.error("Erro ao buscar usuário", err));
     }
