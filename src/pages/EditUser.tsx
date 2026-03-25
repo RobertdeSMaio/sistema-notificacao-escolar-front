@@ -124,13 +124,22 @@ export default function EditarUsuario() {
           <label className="block text-sm font-medium text-gray-700">
             Função
           </label>
-          <input
+          <select
             name="role"
             className="w-full border p-2 rounded"
             onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             value={formik.values.role}
-            placeholder="Admin, Parent, Student, Teacher, Principal"
-          />
+          >
+            <option value="" disabled>
+              Selecione uma função
+            </option>
+            <option value="admin">Admin</option>
+            <option value="parent">Parent</option>
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="principal">Principal</option>
+          </select>
         </div>
 
         <div className="flex gap-4">
