@@ -8,6 +8,14 @@ export default function EditarUsuario() {
 
   const [usuarioCompletoOriginal, setUsuarioCompletoOriginal] = useState(null);
 
+  const roleOptions = [
+    { label: "Administrador", value: "admin" },
+    { label: "Pai/Mãe", value: "parent" },
+    { label: "Estudante", value: "student" },
+    { label: "Professor", value: "teacher" },
+    { label: "Diretor", value: "principal" },
+  ];
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -126,19 +134,16 @@ export default function EditarUsuario() {
           </label>
           <select
             name="role"
-            className="w-full border p-2 rounded"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             value={formik.values.role}
+            onChange={formik.handleChange}
+            className="w-full border p-2 rounded"
           >
-            <option value="" disabled>
-              Selecione uma função
-            </option>
-            <option value="admin">Admin</option>
-            <option value="parent">Parent</option>
-            <option value="student">Student</option>
-            <option value="teacher">Teacher</option>
-            <option value="principal">Principal</option>
+            <option value="">Selecione...</option>
+            {roleOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
           </select>
         </div>
 
