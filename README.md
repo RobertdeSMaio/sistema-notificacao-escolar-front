@@ -290,12 +290,8 @@ https://sistema-notificacao-escolar-back.onrender.com/html
 | Ferramenta | Versão mínima |
 |------------|--------------|
 | Node.js    | >= 20.0.0    |
-| .NET       | >= 8.0       |
+| .NET       | >= 10.0      |
 | PostgreSQL | >= 14        |
 
 ---
 
-## 👤 Autor
-
-**Robert de S. Maio**
-[github.com/RobertdeSMaio](https://github.com/RobertdeSMaio)
